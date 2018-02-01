@@ -1,0 +1,29 @@
+{
+  "name": "api.guscrawford.com",
+  "version": "0.0.0",
+  "description": "api for guscrawfor.com",
+  "main": "bin/GusCrawfordDotComApp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+
+    "api.develop": "npm-run-all --parallel mongod.local.guscrawford.com tsc.watch api.watch",
+    "api.watch":"nodemon bin/GusCrawfordDotComApp.js",
+    "api.start":"node bin/GusCrawfordDotComApp.js",
+
+    "db.create":"mongo app/db/tasks/create.guscrawford.com.mongo.js",
+    "db.drop":"mongo app/db/tasks/drop.guscrawford.com.mongo.js",
+
+    "mongod.local.guscrawford.com":"mongod --dbpath \"./app/db/local-data\"",
+
+    "tsc.watch":"tsc --watch"
+  },
+  "author": "Gus",
+  "license": "MIT",
+  "dependencies": {
+    "@types/mongodb": "^3.0.5",
+    "mongodb": "^3.0.2",
+    "npm-run-all": "^4.1.2",
+    "odata-v4-mongodb": "^0.1.12",
+    "odata-v4-server": "^0.2.10"
+  }
+}

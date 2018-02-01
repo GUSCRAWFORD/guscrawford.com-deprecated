@@ -1,0 +1,7 @@
+{
+    "local":{
+        "hostname":"localhost",
+        "port":3000,
+        "prefix":"v1"
+    }
+}

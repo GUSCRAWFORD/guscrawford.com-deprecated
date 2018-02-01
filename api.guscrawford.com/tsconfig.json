@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "experimentalDecorators": true,
+        "target": "es6",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "lib": [
+            "es2017"
+        ]
+    },
+    "exclude": [
+        "./app/common/explorer"
+    ]
+}
