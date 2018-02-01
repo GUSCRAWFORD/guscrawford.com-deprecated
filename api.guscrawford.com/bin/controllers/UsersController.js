@@ -11,6 +11,7 @@ const User_1 = require("../models/User");
 const Controller_1 = require("../common/Controller");
 let UsersController = class UsersController extends Controller_1.Controller {
     static onBeforeAny(controllerContext) {
+        throw new Error("no");
     }
     static onAfterAny(controllerContext) {
         console.log(controllerContext.data);

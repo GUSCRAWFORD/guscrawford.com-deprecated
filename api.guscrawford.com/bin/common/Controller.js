@@ -39,7 +39,7 @@ class Controller extends odata_v4_server_1.ODataController {
     static onAfterAny(controllerContext) { }
     find(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            const dbClient = yield new db_guscrawford_com_1.DbClient().connect(), mongodbQuery = odata_v4_mongodb_1.createQuery(query), controllerContext = new ControllerContext(dbClient, null, query, mongodbQuery);
+            const dbClient = yield new db_guscrawford_com_1.DbClient().connect(), mongodbQuery = odata_v4_mongodb_1.createQuery(query), controllerContext = new ControllerContext(dbClient, null, null, query, mongodbQuery);
             Controller.onHook(this, 'BeforeAny', controllerContext);
             Controller.onHook(this, 'BeforeQuery', controllerContext);
             if (typeof mongodbQuery.query._id == "string")
@@ -59,6 +59,11 @@ class Controller extends odata_v4_server_1.ODataController {
         });
     }
     findOne(key) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const dbClient = yield new db_guscrawford_com_1.DbClient().connect(), controllerContext = new ControllerContext(dbClient, null, key);
+            Controller.onHook(this, 'BeforeAny', controllerContext);
+            throw new Error("not implemented");
+        });
     }
     insert(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -95,9 +100,10 @@ __decorate([
 ], Controller.prototype, "insert", null);
 exports.Controller = Controller;
 class ControllerContext {
-    constructor(dbClient, data, query, mongoQuery) {
+    constructor(dbClient, data, key, query, mongoQuery) {
         this.dbClient = dbClient;
         this.data = data;
+        this.key = key;
         this.query = query;
         this.mongoQuery = mongoQuery;
     }

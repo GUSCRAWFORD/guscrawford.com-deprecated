@@ -11,6 +11,7 @@ import { Controller, ControllerContext } from '../common/Controller';
 @odata.type(User)
 export class UsersController extends Controller<User> {
     static onBeforeAny(controllerContext:ControllerContext) {
+        throw new Error("no")
     }
 
     static onAfterAny(controllerContext:ControllerContext) {

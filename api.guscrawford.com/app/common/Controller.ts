@@ -28,7 +28,7 @@ export class Controller<TCollection extends Model> extends ODataController {
         const
             dbClient = await new DbClient().connect(),
             mongodbQuery = createQuery(query),
-            controllerContext = new ControllerContext(dbClient, null, query, mongodbQuery);
+            controllerContext = new ControllerContext(dbClient, null, null, query, mongodbQuery);
         Controller.onHook(this, 'BeforeAny', controllerContext);
         Controller.onHook(this, 'BeforeQuery', controllerContext);
         if (typeof mongodbQuery.query._id == "string")
@@ -47,8 +47,12 @@ export class Controller<TCollection extends Model> extends ODataController {
         return result;
     }
     @odata.GET
-    findOne( @odata.key key:number ){
-        
+    async findOne( @odata.key key:number ){
+        const
+            dbClient = await new DbClient().connect(),
+            controllerContext = new ControllerContext(dbClient, null, key);
+        Controller.onHook(this, 'BeforeAny', controllerContext);
+        throw new Error("not implemented")
     }
     @odata.POST
     async insert( @odata.body data:TCollection ) {
@@ -77,6 +81,7 @@ export class ControllerContext {
     constructor(
         public dbClient?:DbClient,
         public data?: any,
+        public key?: any,
         public query?: ODataQuery,
         public mongoQuery?: any
     ) {};
