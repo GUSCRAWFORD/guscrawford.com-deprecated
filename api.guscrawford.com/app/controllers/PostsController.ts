@@ -5,11 +5,12 @@ import {
     odata
 } from "odata-v4-server";
 import { createQuery } from "odata-v4-mongodb";
-import { User } from '../models/User';
+import { User, Post } from '../models';
 import { DbClient } from '../db/db.guscrawford.com';
 import { Controller, ControllerContext } from '../common/Controller';
-@odata.type(User)
-export class UsersController extends ODataController {
+@odata.type(Post)
+export class PostsController extends ODataController {
+
     static onBeforeAny(controllerContext:ControllerContext) {
         console.log(controllerContext.data)
     }
@@ -20,7 +21,7 @@ export class UsersController extends ODataController {
 
     @odata.GET
     async find ( @odata.query query: ODataQuery ) {
-        return ['a','b']
+        return ['c','d']
     }
 
 }
