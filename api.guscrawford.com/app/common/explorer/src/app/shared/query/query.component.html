@@ -1,3 +1,29 @@
 <p>
   query works!
 </p>
+<table>
+  <tbody>
+    <ng-container *ngFor="let item of query$|async as items; let i = index">
+
+      <tr *ngIf="!i">
+        <ng-container *ngFor="let pair of item | keyValuePairs">
+          <th>
+            {{pair.key}}
+          </th>
+        </ng-container>
+      </tr>
+      <tr>
+          <ng-container *ngFor="let pair of item | keyValuePairs">
+            <td>
+              {{pair.value}}
+            </td>
+          </ng-container>
+        </tr>
+    </ng-container>
+  </tbody>
+</table>
+<div [hidden]="!state.busy" class="loading">
+  <span>
+      <i class="fas fa-spinner fa-spin"></i>
+  </span>
+</div>

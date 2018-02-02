@@ -47,12 +47,26 @@ export class Controller<TCollection extends Model> extends ODataController {
         return result;
     }
     @odata.GET
-    async findOne( @odata.key key:number ){
+    async findOne( @odata.key key:string, @odata.query query: ODataQuery ){
         const
             dbClient = await new DbClient().connect(),
-            controllerContext = new ControllerContext(dbClient, null, key);
+            mongoQuery = createQuery(query),
+            controllerContext = new ControllerContext(dbClient, null, key, query, mongoQuery);
+        let keyObject;
+        try {keyObject = new ObjectID(key);}catch(ex){}
         Controller.onHook(this, 'BeforeAny', controllerContext);
-        throw new Error("not implemented")
+        Controller.onHook(this, 'BeforeRead', controllerContext);
+        let result = dbClient.db.collection(Controller.defaultName(this))
+            .findOne({_id:keyObject || key},{
+                fields: mongoQuery.projection
+            }).then(result=>{
+                controllerContext.data = result;
+                return result;
+            });
+        dbClient.client.close();
+        Controller.onHook(this, 'AfterAny', controllerContext);
+        Controller.onHook(this, 'AfterRead', controllerContext);
+        return result;
     }
     @odata.POST
     async insert( @odata.body data:TCollection ) {

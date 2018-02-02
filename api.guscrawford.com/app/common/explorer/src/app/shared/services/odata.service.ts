@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/share';
 export const API = 'api'
 @Injectable()
 export class OdataService {
@@ -32,7 +36,7 @@ export class OdataResource<TModel> {
     if (query) url += serialize(query);
     return this.http
       .get(url)
-      .map(rs=>rs.json().value);
+      .map(rs=>rs.json().value).take(1);
   }
 }
 //https://stackoverflow.com/questions/1714786/query-string-encoding-of-a-javascript-object
