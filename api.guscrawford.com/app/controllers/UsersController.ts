@@ -9,7 +9,7 @@ import { User } from '../models/User';
 import { DbClient } from '../db/db.guscrawford.com';
 import { Controller, ControllerContext } from '../common/Controller';
 @odata.type(User)
-export class UsersController extends ODataController {
+export class UsersController extends Controller<User> {
     static onBeforeAny(controllerContext:ControllerContext) {
         console.log(controllerContext.data)
     }
@@ -18,9 +18,5 @@ export class UsersController extends ODataController {
         console.log(controllerContext.data)
     }
 
-    @odata.GET
-    async find ( @odata.query query: ODataQuery ) {
-        return ['a','b']
-    }
 
 }

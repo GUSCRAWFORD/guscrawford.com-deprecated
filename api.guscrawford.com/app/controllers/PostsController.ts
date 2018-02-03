@@ -8,9 +8,8 @@ import { createQuery } from "odata-v4-mongodb";
 import { User, Post } from '../models';
 import { DbClient } from '../db/db.guscrawford.com';
 import { Controller, ControllerContext } from '../common/Controller';
-@odata.type(Post)
-export class PostsController extends ODataController {
-
+@odata.type(User)
+export class PostsController extends Controller<Post> {
     static onBeforeAny(controllerContext:ControllerContext) {
         console.log(controllerContext.data)
     }
@@ -19,9 +18,5 @@ export class PostsController extends ODataController {
         console.log(controllerContext.data)
     }
 
-    @odata.GET
-    async find ( @odata.query query: ODataQuery ) {
-        return ['c','d']
-    }
 
 }
