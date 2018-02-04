@@ -11,7 +11,7 @@ import { Controller, ControllerContext } from '../common/Controller';
 @odata.type(User)
 export class UsersController extends Controller<User> {
     static onBeforeAny(controllerContext:ControllerContext) {
-        console.log(controllerContext.data)
+        console.log('Users');
     }
 
     static onAfterAny(controllerContext:ControllerContext) {

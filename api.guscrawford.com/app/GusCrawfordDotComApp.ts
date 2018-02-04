@@ -33,9 +33,7 @@ const
             return ['a','b','c'];
         }
     }
-    @odata.namespace("GusCrawfordDotCom")
-    @odata.controller(NumbersController, true)
-    @odata.controller(StringsController, true)
+@odata.namespace("GusCrawfordDotCom")
 @odata.controller(PostsController, true)
 @odata.controller(UsersController, true)
 export class GusCrawfordDotComApp extends ODataServer {

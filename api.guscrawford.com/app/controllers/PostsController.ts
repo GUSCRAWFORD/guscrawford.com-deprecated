@@ -8,10 +8,10 @@ import { createQuery } from "odata-v4-mongodb";
 import { User, Post } from '../models';
 import { DbClient } from '../db/db.guscrawford.com';
 import { Controller, ControllerContext } from '../common/Controller';
-@odata.type(User)
-export class PostsController extends Controller<Post> {
+@odata.type(Post)
+export class PostsController extends Controller<any> {
     static onBeforeAny(controllerContext:ControllerContext) {
-        console.log(controllerContext.data)
+        console.log('Posts');
     }
 
     static onAfterAny(controllerContext:ControllerContext) {

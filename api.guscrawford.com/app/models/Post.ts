@@ -1,11 +1,15 @@
 import { Edm } from 'odata-v4-server';
-import { Model } from './Model';
+import { ObjectID } from 'mongodb';
 @Edm.Annotate({
     term: "UI.DisplayName",
     string: "Post"
 })
-export class Post extends Model {
+export class Post {
+    @Edm.Key
+    @Edm.Computed
+    @Edm.String
+    _id: ObjectID;
+
     @Edm.String
     content: string;
-    
 }
