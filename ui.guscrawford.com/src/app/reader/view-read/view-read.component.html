@@ -2,6 +2,6 @@
   view-read works!
 </p>
 <app-postings [posts]="posts"></app-postings>
-<div [hidden]="!loading">{{loading}}
+<div [hidden]="!pageControl.loading">{{pageControl.loading}}
   <mat-spinner></mat-spinner>
 </div>

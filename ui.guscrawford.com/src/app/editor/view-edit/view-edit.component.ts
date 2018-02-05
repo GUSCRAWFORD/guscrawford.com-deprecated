@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-
 import { Poster, Post } from '../../shared';
 
 @Component({
@@ -18,23 +16,21 @@ export class ViewEditComponent implements OnInit {
   ) { }
   ngOnInit() {
     this.load()
-    .flatMap(this.done)
-    .subscribe(next=>next, error=>error, ()=>{})
+      .subscribe(next=>next, error=>error, ()=>{});
   }
-  loading = false;
   id: string;
-  posts: Post[];
+  post: Post;
   load() {
-    this.loading = true;
     return this.route.params.map(p=>p.id)
       .flatMap(id=>{
-        this.id=id;
-        return this.poster.listPosts()
+        if (id) {
+          this.id=id;
+          return this.poster.readPost(id);
+        }
+        return Observable.of(this.poster.new());
       })
-      .flatMap(posts=>this.posts=posts);
+      .flatMap(post=>
+        Observable.of(this.post=post));
   }
-  done(data) {
-    this.loading = false;
-    return Observable.of(data);
-  }
+
 }

@@ -1,7 +1,11 @@
 <p>
   edit-post works!
 </p>
-<form>
-  <textarea></textarea>
-  <input type="submit">
+<form [formGroup]="formControl.group"
+      (ngSubmit)="save()"
+      class="form-snapping">
+  <mat-form-field class="snap-full">
+    <textarea matInput placeholder="Textarea" [(ngModel)]="post.content" formControlName="content"></textarea>
+  </mat-form-field>
+  <button mat-button type="submit">Click me!</button>
 </form>

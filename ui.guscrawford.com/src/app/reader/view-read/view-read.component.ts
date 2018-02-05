@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { Poster, Post } from '../../shared';
+import { Poster, Post, PageController } from '../../shared';
 @Component({
   selector: 'app-view-read',
   templateUrl: './view-read.component.html',
@@ -16,25 +15,21 @@ export class ViewReadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.load()
-    .flatMap(posts=>this.done(posts))
+    this.pageControl.refreshPage()
     .subscribe(next=>next, error=>error, ()=>{})
   }
-  loading = false;
+  pageControl = new PageController<Post>(this, this.load)
   id: string;
   posts: Post[];
   load() {
-    this.loading = true;
     return this.route.params.map(p=>p.id)
       .flatMap(id=>{
         this.id=id;
         return this.poster.listPosts()
       })
-      .flatMap(posts=>this.posts=posts);
-  }
-  done(data) {
-    this.loading = false;
-    return Observable.of(data);
+      .flatMap(posts=>{
+        return Observable.of(this.posts=posts)
+      });
   }
 
 }

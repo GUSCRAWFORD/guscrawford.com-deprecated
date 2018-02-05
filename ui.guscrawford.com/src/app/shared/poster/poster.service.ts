@@ -14,4 +14,15 @@ export class Poster {
   listPosts() {
     return this.resource.query();
   }
+  readPost(postId:string) {
+    return this.resource.single(postId);
+  }
+  createPost(post:Post) {
+    return this.resource.create(post);
+  }
+  new(): Post {
+    return {
+      content:null
+    }
+  }
 }

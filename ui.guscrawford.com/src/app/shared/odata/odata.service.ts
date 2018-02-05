@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/share';
+import { Observable } from '../../shared';
 import { environment } from '../../../environments/environment';
 export const API = environment.apiPath || 'api';
 @Injectable()
@@ -32,8 +28,28 @@ export class OdataApiMetadata {
 export class ODataResource<TModel> {
   constructor(public name:string, private http: Http) {
   }
-  query(query?:any) {
-    let url = API+'/'+this.name;
+  create(data:TModel) {
+    let url = "@api/@resource"
+                .replace(/@api/g,API)
+                .replace(/@resource/g, this.name);
+    return this.http
+      .post(url, data)
+      .map(rs=>rs.json());
+  }
+  single(key:any, query?:any): Observable<TModel> {
+    let url = "@api/@resource('@key')"
+                .replace(/@api/g,API)
+                .replace(/@resource/g, this.name)
+                .replace(/@key/g, key.toString());
+    if (query) url += serialize(query);
+    return this.http
+      .get(url)
+      .map(rs=>rs.json()).take(1);
+  }
+  query(query?:any): Observable<TModel[]> {
+    let url = "@api/@resource"
+                .replace(/@api/g,API)
+                .replace(/@resource/g, this.name);
     if (query) url += serialize(query);
     return this.http
       .get(url)

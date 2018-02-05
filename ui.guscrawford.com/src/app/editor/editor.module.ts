@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ViewEditComponent } from './view-edit/view-edit.component';
 import { EditPostComponent } from './edit-post/edit-post.component';
@@ -14,11 +15,13 @@ import {
   imports: [
     CommonModule,
     SharedModule,
-    routing
+    routing,
+    FormsModule, ReactiveFormsModule
   ],
   declarations: [
     ViewEditComponent,
     ViewPostComponent,
-    EditPostComponent]
+    EditPostComponent
+  ]
 })
 export class EditorModule { }
