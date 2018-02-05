@@ -17,7 +17,7 @@ export class ViewReadComponent implements OnInit {
 
   ngOnInit() {
     this.load()
-    .flatMap(this.done)
+    .flatMap(posts=>this.done(posts))
     .subscribe(next=>next, error=>error, ()=>{})
   }
   loading = false;

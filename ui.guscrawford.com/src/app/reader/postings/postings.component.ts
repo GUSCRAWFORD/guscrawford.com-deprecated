@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import {MatTableDataSource} from '@angular/material';
+
 import { Post } from '../../shared';
 
 @Component({
@@ -12,8 +14,7 @@ export class PostingsComponent implements OnInit {
   constructor() { }
 
   @Input()
-  posts: Post[];
-  
+  posts :Post[];
   ngOnInit() {
   }
 

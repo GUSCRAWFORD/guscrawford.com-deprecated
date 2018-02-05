@@ -9,7 +9,9 @@ import { UiComponent } from './ui/ui.component';
 
 import {
   MatIconModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatTableModule,
+  MatCardModule
 } from '@angular/material'
 import { ODataService } from './odata/odata.service';
 import { Poster } from './poster/poster.service';
@@ -20,7 +22,9 @@ import { Poster } from './poster/poster.service';
     HttpModule,
     RouterModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatCardModule
   ],
   declarations: [
     UiComponent
@@ -32,7 +36,9 @@ import { Poster } from './poster/poster.service';
   ],
   exports:[
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatCardModule
   ]
 })
 export class SharedModule { }
