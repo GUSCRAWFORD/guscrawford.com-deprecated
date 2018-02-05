@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { Post } from '../../shared';
 
 @Component({
   selector: 'app-postings',
@@ -9,6 +11,9 @@ export class PostingsComponent implements OnInit {
 
   constructor() { }
 
+  @Input()
+  posts: Post[];
+  
   ngOnInit() {
   }
 

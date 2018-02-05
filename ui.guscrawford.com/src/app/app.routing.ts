@@ -1,9 +1,12 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { UiComponent } from './shared/ui/ui.component';
 
 const routes: Routes = [
-  { path: '', loadChildren: './ui/ui.module#UiModule' }
+  { path: '', redirectTo:'read', pathMatch:'full' },
+  { path:'read', component:UiComponent, loadChildren:'./reader/reader.module#ReaderModule'},
+  { path:'edit', component:UiComponent, loadChildren:'./editor/editor.module#EditorModule'}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes);
