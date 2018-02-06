@@ -1,7 +1,10 @@
-<p>
-  view-read works!
-</p>
-<app-postings [posts]="posts"></app-postings>
+<mat-card *ngFor="let post of posts">
+    <app-posting [post]="post"></app-posting>
+    <mat-card-actions>
+        <app-posting-actions [post]="post" (action)="action($event)"></app-posting-actions>
+    </mat-card-actions>
+</mat-card>
+
 <div [hidden]="!pageControl.loading">{{pageControl.loading}}
   <mat-spinner></mat-spinner>
 </div>

@@ -23,7 +23,8 @@ import { routing } from './app.routing';
   providers: [],
   bootstrap: [AppComponent],
   exports:[
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class AppModule { }

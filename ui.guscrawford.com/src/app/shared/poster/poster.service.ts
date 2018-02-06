@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ODataService, ODataResource } from '../odata';
 import { Post } from '../models';
+import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class Poster {
 
@@ -11,18 +12,25 @@ export class Poster {
 
   private resource = this.odata.resource<Post>('Posts');
 
-  listPosts() {
+  listPosts() : Observable<Post[]> {
     return this.resource.query();
   }
-  readPost(postId:string) {
+  readPost(postId:string) : Observable<Post>{
     return this.resource.single(postId);
   }
-  createPost(post:Post) {
+  createPost(post:Post) : Observable<Post> {
     return this.resource.create(post);
+  }
+  deletePost(postId:string) : Observable<Post> {
+    return this.resource.remove(postId);
   }
   new(): Post {
     return {
       content:null
     }
   }
+}
+
+export enum PostingActions {
+  Delete = 1
 }

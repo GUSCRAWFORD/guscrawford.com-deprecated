@@ -6,6 +6,7 @@ import { ViewReadComponent } from './view-read/view-read.component';
 
 import { SharedModule } from '../shared';
 import { routing } from './reader.routing';
+import { PostingActionsComponent } from './posting-actions/posting-actions.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -15,7 +16,8 @@ import { routing } from './reader.routing';
   declarations: [
     PostingComponent,
     PostingsComponent,
-    ViewReadComponent
+    ViewReadComponent,
+    PostingActionsComponent
   ],
   providers: []
 })

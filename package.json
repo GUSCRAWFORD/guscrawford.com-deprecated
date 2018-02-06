@@ -5,8 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm-run-all --parallel api ui",
-    "api": "cd api.guscrawford.com && npm run api.watch",
-    "ui":"cd ui.guscrawford.com && ng serve --proxy proxy.conf.json"
+    "api": "cd api.guscrawford.com && npm run api.develop",
+    "ui":"cd ui.guscrawford.com && ng serve --proxy proxy.conf.json --port 58585"
   },
   "repository": {
     "type": "git",

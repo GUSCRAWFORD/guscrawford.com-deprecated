@@ -21,11 +21,13 @@ import {
   MatFormFieldModule,
   MatFormField,
   MatInputModule,
-  MatButtonModule
+  MatButtonModule,
+  MatTabsModule
 } from '@angular/material'
 import { ODataService } from './odata/odata.service';
 import { Poster } from './poster/poster.service';
-
+import { MarkdownService } from './markdown/markdown.service';
+import { MarkdownPreviewComponent } from './markdown/markdown-preview.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -37,15 +39,18 @@ import { Poster } from './poster/poster.service';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTabsModule
   ],
   declarations: [
-    UiComponent
+    UiComponent,
+    MarkdownPreviewComponent
   ],
   providers: [
     ODataService,
     UiService,
-    Poster
+    Poster,
+    MarkdownService
   ],
   exports:[
     MatIconModule,
@@ -54,12 +59,9 @@ import { Poster } from './poster/poster.service';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTabsModule,
+    MarkdownPreviewComponent
   ]
 })
 export class SharedModule { }
-export { Observable };
-export * from 'rxjs/add/operator/take';
-export * from 'rxjs/add/operator/map';
-export * from 'rxjs/add/operator/mergeMap';
-export * from 'rxjs/add/operator/share';

@@ -1,11 +1,19 @@
-<p>
-  edit-post works!
-</p>
 <form [formGroup]="formControl.group"
       (ngSubmit)="save()"
       class="form-snapping">
-  <mat-form-field class="snap-full">
-    <textarea matInput placeholder="Textarea" [(ngModel)]="post.content" formControlName="content"></textarea>
-  </mat-form-field>
-  <button mat-button type="submit">Click me!</button>
+  <mat-tab-group>
+    <mat-tab label="MARKDOWN">
+
+        <mat-form-field class="snap-full">
+          <textarea matInput placeholder="Textarea" [(ngModel)]="post.content" formControlName="content"></textarea>
+        </mat-form-field>
+    </mat-tab>
+    <mat-tab label="PREVIEW">
+      
+      <app-markdown-preview [content]="post.content"></app-markdown-preview>
+    </mat-tab>
+  </mat-tab-group>
+  <button mat-raised-button type="submit">SAVE</button>
+  <button mat-icon-button type="button" class="float-right"><i class="material-icons">remove_red_eye</i></button>
+
 </form>

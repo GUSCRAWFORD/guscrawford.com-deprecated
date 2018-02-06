@@ -147,7 +147,7 @@ export class Controller<T extends {_id:ObjectID}> extends ODataController {
         Controller.onHook(this, 'BeforeAny', controllerContext);
         Controller.onHook(this, 'BeforeDelete', controllerContext);
         result = await dbClient.db
-        .collection("Products")
+        .collection(Controller.defaultName(this))
         .deleteOne({ _id: keyId })
         .then(result => result.deletedCount);
         Controller.onHook(this, 'AfterAny', controllerContext);

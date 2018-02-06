@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Observable } from '../../shared';
+import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 export const API = environment.apiPath || 'api';
 @Injectable()
@@ -54,6 +54,15 @@ export class ODataResource<TModel> {
     return this.http
       .get(url)
       .map(rs=>rs.json().value).take(1);
+  }
+  remove(key:any) {
+    let url = "@api/@resource('@key')"
+                .replace(/@api/g,API)
+                .replace(/@resource/g, this.name)
+                .replace(/@key/g, key.toString());
+    return this.http
+      .delete(url)
+      .map(rs=>rs.json()).take(1);
   }
 }
 //https://stackoverflow.com/questions/1714786/query-string-encoding-of-a-javascript-object

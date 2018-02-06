@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import {
 
+  Post
+} from '../../shared';
 @Component({
   selector: 'app-posting',
   templateUrl: './posting.component.html',
@@ -8,7 +11,8 @@ import { Component, OnInit } from '@angular/core';
 export class PostingComponent implements OnInit {
 
   constructor() { }
-
+  @Input()
+  post: Post;
   ngOnInit() {
   }
 

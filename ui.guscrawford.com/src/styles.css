@@ -4,3 +4,13 @@
 .form-snapping .snap-full {
     width: 100%;
 }
+
+.align-right {
+    text-align: right;
+}
+.align-left {
+    text-align: left;
+}
+.float-right {
+    float:right;
+}

@@ -1,1 +1,1 @@
-export { Poster } from './poster.service';
+export { Poster, PostingActions } from './poster.service';
