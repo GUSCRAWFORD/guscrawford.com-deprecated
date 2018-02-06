@@ -1,19 +1,21 @@
 <form [formGroup]="formControl.group"
       (ngSubmit)="save()"
       class="form-snapping">
-  <mat-tab-group>
-    <mat-tab label="MARKDOWN">
 
-        <mat-form-field class="snap-full">
-          <textarea matInput placeholder="Textarea" [(ngModel)]="post.content" formControlName="content"></textarea>
-        </mat-form-field>
-    </mat-tab>
-    <mat-tab label="PREVIEW">
-      
-      <app-markdown-preview [content]="post.content"></app-markdown-preview>
-    </mat-tab>
-  </mat-tab-group>
-  <button mat-raised-button type="submit">SAVE</button>
-  <button mat-icon-button type="button" class="float-right"><i class="material-icons">remove_red_eye</i></button>
+  <button mat-raised-button
+          type="submit">SAVE</button>
+  <button mat-icon-button type="button"
+          class="float-right"
+          (click)="togglePreview()">
+    <i class="material-icons">remove_red_eye</i>
+  </button>
 
+  <div [hidden]="states.edit !== States.Showing" [@fadeInOut]="states.edit">
+    <mat-form-field class="snap-full">
+      <textarea matInput placeholder="Textarea" [(ngModel)]="post.content" formControlName="content"></textarea>
+    </mat-form-field>
+  </div>
+  <div [hidden]="states.preview !== States.Showing" [@fadeInOut]="states.preview">
+    <app-markdown-preview [content]="post.content"></app-markdown-preview>
+  </div>
 </form>

@@ -1,10 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input
+ } from '@angular/core';
 
 import {
   FormController,
   FormBuilder,
   Validators,
   PageController,
+  AnimationBox,
 
   Post,
   Poster
@@ -12,7 +17,8 @@ import {
 @Component({
   selector: 'app-edit-post',
   templateUrl: './edit-post.component.html',
-  styleUrls: ['./edit-post.component.css']
+  styleUrls: ['./edit-post.component.css'],
+  animations: AnimationBox.fadeInOut
 })
 export class EditPostComponent implements OnInit {
 
@@ -22,7 +28,7 @@ export class EditPostComponent implements OnInit {
   ) { }
   @Input()
   post: Post;
-
+  States = AnimationBox.States;
   formControl = new FormController(this.builder, 'postForm');
   ngOnInit() {
     this.formControl
@@ -33,5 +39,14 @@ export class EditPostComponent implements OnInit {
     return this.poster
       .createPost(this.post)
       .subscribe(next=>next, err=>err, ()=>{})
+  }
+  togglePreview() {
+    let other = this.states.preview;
+    this.states.preview = this.states.edit;
+    this.states.edit = other;
+  }
+  states = {
+    preview:AnimationBox.States.Hidden,
+    edit:AnimationBox.States.Showing
   }
 }

@@ -1,2 +1,3 @@
 export * from './FormController';
-export { PageController } from './PageController';
+export * from './PageController';
+export * from './AnimationBox';
