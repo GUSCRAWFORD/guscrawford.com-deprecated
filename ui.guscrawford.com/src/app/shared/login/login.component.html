@@ -1,0 +1,21 @@
+<form [formGroup]="formControl.group"
+      (ngSubmit)="save()"
+      class="form-snapping">
+
+  <button mat-raised-button
+          type="submit">LOGIN
+  </button>
+
+  <div [@fadeInOut]>
+    <mat-form-field class="snap-full">
+      <input  matInput type="text"
+              placeholder="Email" formControlName="username">
+    </mat-form-field>
+  </div> 
+  <div [@fadeInOut]>
+    <mat-form-field class="snap-full">
+      <input  matInput type="password"
+              placeholder="Password" formControlName="username">
+    </mat-form-field>
+  </div>
+</form>

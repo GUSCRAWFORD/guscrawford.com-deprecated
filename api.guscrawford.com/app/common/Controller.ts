@@ -111,6 +111,7 @@ export class Controller<T extends {_id:ObjectID}> extends ODataController {
             data._id = result.upsertedId
             return data._id ? data : null;
         });
+        dbClient.client.close();
         Controller.onHook(this, 'AfterAny', controllerContext);
         Controller.onHook(this, 'AfterUpsert', controllerContext);
         return result;
@@ -127,11 +128,12 @@ export class Controller<T extends {_id:ObjectID}> extends ODataController {
         Controller.onHook(this, 'BeforeAny', controllerContext);
         Controller.onHook(this, 'BeforeUpdate', controllerContext);
         result = await dbClient.db
-        .collection(Controller.defaultName(this))
-        .updateOne(
-            { _id: keyId },
-            { $set: delta }
-        ).then(result => result.modifiedCount);
+            .collection(Controller.defaultName(this))
+            .updateOne(
+                { _id: keyId },
+                { $set: delta }
+            ).then(result => result.modifiedCount);
+        dbClient.client.close();
         Controller.onHook(this, 'AfterAny', controllerContext);
         Controller.onHook(this, 'AfterUpdate', controllerContext);
         return result;
@@ -147,9 +149,10 @@ export class Controller<T extends {_id:ObjectID}> extends ODataController {
         Controller.onHook(this, 'BeforeAny', controllerContext);
         Controller.onHook(this, 'BeforeDelete', controllerContext);
         result = await dbClient.db
-        .collection(Controller.defaultName(this))
-        .deleteOne({ _id: keyId })
-        .then(result => result.deletedCount);
+            .collection(Controller.defaultName(this))
+            .deleteOne({ _id: keyId })
+            .then(result => result.deletedCount);
+        dbClient.client.close();
         Controller.onHook(this, 'AfterAny', controllerContext);
         Controller.onHook(this, 'AftereDelete', controllerContext);
         return result;

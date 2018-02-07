@@ -39,4 +39,9 @@ const
 export class GusCrawfordDotComApp extends ODataServer {
     
 }
-GusCrawfordDotComApp.create('/'+APP_CONFIG[ENV].prefix, APP_CONFIG[ENV].port);
+//GusCrawfordDotComApp.create('/'+APP_CONFIG[ENV].prefix, APP_CONFIG[ENV].port);
+
+import * as express from 'express';
+const app = express();
+app.use('/v1', GusCrawfordDotComApp.create())
+app.listen(APP_CONFIG[ENV].port)

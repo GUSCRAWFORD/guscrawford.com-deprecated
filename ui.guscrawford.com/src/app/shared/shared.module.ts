@@ -23,11 +23,14 @@ import {
   MatInputModule,
   MatButtonModule,
   MatTabsModule
-} from '@angular/material'
+} from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { ODataService } from './odata/odata.service';
 import { Poster } from './poster/poster.service';
 import { MarkdownService } from './markdown/markdown.service';
 import { MarkdownPreviewComponent } from './markdown/markdown-preview.component';
+import { LoginComponent } from './login/login.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -40,11 +43,14 @@ import { MarkdownPreviewComponent } from './markdown/markdown-preview.component'
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatTabsModule
+    MatTabsModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     UiComponent,
-    MarkdownPreviewComponent
+    MarkdownPreviewComponent,
+    LoginComponent
   ],
   providers: [
     ODataService,
@@ -61,7 +67,9 @@ import { MarkdownPreviewComponent } from './markdown/markdown-preview.component'
     MatInputModule,
     MatButtonModule,
     MatTabsModule,
-    MarkdownPreviewComponent
+    MarkdownPreviewComponent,
+    ReactiveFormsModule,
+    LoginComponent
   ]
 })
 export class SharedModule { }
