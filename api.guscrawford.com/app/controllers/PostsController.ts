@@ -6,7 +6,7 @@ import {
 } from "odata-v4-server";
 import { createQuery } from "odata-v4-mongodb";
 import { User, Post } from '../models';
-import { DbClient } from '../db/db.guscrawford.com';
+import { DbContext } from '../db/db.guscrawford.com';
 import { Controller, ControllerContext } from '../common/Controller';
 @odata.type(Post)
 export class PostsController extends Controller<any> {

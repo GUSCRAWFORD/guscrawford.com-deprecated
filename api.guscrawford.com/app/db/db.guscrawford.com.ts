@@ -6,7 +6,7 @@ export const DB_ENV = {
     }
 };
 export const ENV = process.env.NODE_ENV || "local";
-export class DbClient {
+export class DbContext {
     client: MongoClient;
     db: Db;
     async connect() {

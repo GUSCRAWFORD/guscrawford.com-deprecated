@@ -2,6 +2,20 @@
     "local":{
         "hostname":"localhost",
         "port":3000,
-        "prefix":"v1"
+        "prefix":"v1",
+        "authentication":"jwt",
+        "jwt":{
+            "secret":"secret",
+            "failWithError":true
+        }
+    },
+    "production":{
+        "hostname":"api.guscrawford.com",
+        "port":8080,
+        "prefix":"v1",
+        "authentication":"jwt",
+        "jwt":{
+            "failWithError":false
+        }
     }
 }

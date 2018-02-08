@@ -33,7 +33,9 @@ export class ODataResource<TModel> {
                 .replace(/@api/g,API)
                 .replace(/@resource/g, this.name);
     return this.http
-      .post(url, data)
+      .post(url, data, {
+        withCredentials:true
+      })
       .map(rs=>rs.json());
   }
   single(key:any, query?:any): Observable<TModel> {
@@ -43,7 +45,9 @@ export class ODataResource<TModel> {
                 .replace(/@key/g, key.toString());
     if (query) url += serialize(query);
     return this.http
-      .get(url)
+      .get(url, {
+        withCredentials:true
+      })
       .map(rs=>rs.json()).take(1);
   }
   query(query?:any): Observable<TModel[]> {
@@ -52,7 +56,9 @@ export class ODataResource<TModel> {
                 .replace(/@resource/g, this.name);
     if (query) url += serialize(query);
     return this.http
-      .get(url)
+      .get(url, {
+        withCredentials:true
+      })
       .map(rs=>rs.json().value).take(1);
   }
   remove(key:any) {
@@ -61,7 +67,9 @@ export class ODataResource<TModel> {
                 .replace(/@resource/g, this.name)
                 .replace(/@key/g, key.toString());
     return this.http
-      .delete(url)
+      .delete(url, {
+        withCredentials:true
+      })
       .map(rs=>rs.json()).take(1);
   }
 }
