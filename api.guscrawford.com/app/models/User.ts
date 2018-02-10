@@ -12,4 +12,11 @@ export class User {
 
     @Edm.String
     username: string;
+
+    roles: UserRoles[];
+}
+export const GUEST_USER = "guest";
+export enum UserRoles {
+    Guest,
+    Member
 }

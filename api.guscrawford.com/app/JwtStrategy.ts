@@ -2,34 +2,42 @@ const
     ENV = process.env.NODE_ENV || "local",
     APP_CONFIG = require('../app/App.config');
 import {
-    UsersController
+    UsersController,
 } from './controllers';
+import {
+    GUEST_USER,
+    UserRoles
+} from './models';
 // JWT Strategy
 import * as PassportJwt from 'passport-jwt';
-export const
-    JwtStrategy = PassportJwt.Strategy,
-    ExtractJwt = PassportJwt.ExtractJwt,
-    jwtOptions = {
-        jwtFromRequest : (req)=>{
-            // console.log(ExtractJwt.fromHeader('x-token')(req))
-            // return ExtractJwt.fromHeader('x-token')(req);
-            
-            //console.log(req.headers.cookie.split(';'))
+abstract class ExtractJwt {
+    static fromCookies (cookieName:string) {
+        return (req)=>{
             let cookies = req.headers.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
                 let cookie = cookies[i].split('=');
-                if (cookie[0].trim()==='x-token') return cookie[1];
+                if (cookie[0].trim()===cookieName) return cookie[1];
             }
             return null;
-        },
+        }
+    }
+}
+export const
+    JwtStrategy = PassportJwt.Strategy,
+    JWT_OPTIONS = {
+        jwtFromRequest : ExtractJwt.fromCookies('x-token'),
         secretOrKey: APP_CONFIG[ENV].jwt.secret,
         issuer: APP_CONFIG[ENV].host,
         audience: APP_CONFIG[ENV].host,
-        algorithms:['HS256']
+        algorithms:APP_CONFIG[ENV].jwt.algorithms||['HS256']
     },
-    jwtStrategy = new JwtStrategy(jwtOptions, (jwtPayload, done)=>{
+    JWT_STRATEGY = new JwtStrategy(JWT_OPTIONS, (jwtPayload, done)=>{
         console.log('Trying to sign in with decodable token, connecting to DB to find subscriber in token:');
         console.log(jwtPayload);
+        if (jwtPayload.sub === GUEST_USER) return done(null, {
+            username:GUEST_USER,
+            roles:[UserRoles.Guest]
+        });
         return (new UsersController())
             .findOne(jwtPayload.sub)
             .then(user=>{
@@ -41,3 +49,13 @@ export const
                 return done(error, false);
             });
     });
+
+    
+import * as Jwt from 'jsonwebtoken';
+export function sign(sub:string|any, payload?: object|any) {
+    if (!payload) payload = {};
+    payload.sub = sub.toString();
+    return Jwt.sign(payload,
+        APP_CONFIG[ENV].jwt.secret,
+        {expiresIn:APP_CONFIG[ENV].jwt.expiresIn||'1h'});
+}

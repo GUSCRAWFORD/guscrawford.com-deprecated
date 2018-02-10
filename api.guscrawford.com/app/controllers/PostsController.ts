@@ -2,18 +2,27 @@ import { ObjectID } from "mongodb";
 import {
     ODataController,
     ODataQuery,
-    odata
+    odata,
+    HttpRequestError
 } from "odata-v4-server";
 import { createQuery } from "odata-v4-mongodb";
-import { User, Post } from '../models';
+import {
+    User, UserRoles,
+    Post,
+    GUEST_USER,
+ } from '../models';
 import { DbContext } from '../db/db.guscrawford.com';
 import { Controller, ControllerContext } from '../common/Controller';
 @odata.type(Post)
 export class PostsController extends Controller<any> {
     static onBeforeAny(controllerContext:ControllerContext) {
         console.log('Posts');
+        console.log(controllerContext.requestContext.request.user);
     }
-
+    static onBeforeInsert(controllerContext:ControllerContext) {
+        if (!controllerContext.requestContext.request.user.roles.find(role=>role===UserRoles.Guest))
+            throw new HttpRequestError(403, 'permission denied');
+    }
     static onAfterAny(controllerContext:ControllerContext) {
         console.log(controllerContext.data)
     }
