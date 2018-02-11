@@ -4,11 +4,11 @@ import {
   FormBuilder,
   Validators,
   PageController,
-  AnimationBox,
-
-  Post,
-  Poster
-} from '../../shared';
+  AnimationBox
+} from '../ui'
+import {
+  PostManager
+} from '../post-manager';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private builder: FormBuilder,
-    private poster: Poster
+    private PostManager: PostManager
   ) { }
   States = AnimationBox.States;
   formControl = new FormController(this.builder, 'postForm');

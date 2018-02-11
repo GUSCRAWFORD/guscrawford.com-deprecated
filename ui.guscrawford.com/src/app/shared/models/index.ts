@@ -1,1 +1,2 @@
-export { Post } from './post.model';
+export * from './Post.model';
+export * from './User.model';

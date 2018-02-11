@@ -12,7 +12,7 @@ import {
   AnimationBox,
 
   Post,
-  Poster
+  PostManager
 } from '../../shared';
 @Component({
   selector: 'app-edit-post',
@@ -24,7 +24,7 @@ export class EditPostComponent implements OnInit {
 
   constructor(
     private builder: FormBuilder,
-    private poster: Poster
+    private postManager: PostManager
   ) { }
   @Input()
   post: Post;
@@ -36,8 +36,8 @@ export class EditPostComponent implements OnInit {
   }
 
   save() {
-    return this.poster
-      .createPost(this.post)
+    return this.postManager
+      [this.post._id?'update':'create'](this.post)
       .subscribe(next=>next, err=>err, ()=>{})
   }
   togglePreview() {

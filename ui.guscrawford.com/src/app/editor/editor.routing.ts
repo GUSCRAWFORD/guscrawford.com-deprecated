@@ -4,11 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ViewEditComponent } from './view-edit/view-edit.component';
 
 const routes: Routes = [
-  { path: '', component: ViewEditComponent, outlet:"ui",
-    children:[
-      { path: ':id', component: ViewEditComponent }
-    ]
-  }
+  { path: '', component: ViewEditComponent, outlet:"ui" }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);

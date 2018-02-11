@@ -33,22 +33,58 @@ const
     app = express(),
     prefix = APP_CONFIG[ENV].prefix?'/'+APP_CONFIG[ENV].prefix:'';
 
-import { JWT_STRATEGY, sign } from './JwtStrategy';
+import { JWT_STRATEGY, sign, JWT_COOKIE } from './JwtStrategy';
 passport.use(JWT_STRATEGY);
+const AUTHENTICATE = passport.authenticate("jwt", { session: false, failWithError:  APP_CONFIG[ENV].jwt.failWithError});
 app
+.use(express.json())
 .post(prefix+'/login', (req, res, next)=>{
     console.log('login');
-    try {
-        var token = sign("guest", {guestRoles:[UserRoles.Guest]});
-        res.writeHead(204, {'Set-Cookie':'x-token='+token+';path=/;httponly'});
+    let defaultGuestUser = {username:"guest", roles:[UserRoles.Guest]};
+    console.log(req.body)
+    if (req.body.username && req.body.password)
+        (new UsersController()).login(req.body.username,req.body.password)
+        .then(verifiedUser=>{
+            setJwt(verifiedUser || defaultGuestUser);
+        })
+        .catch(err=>{
+            console.log(err);
+            setJwt(defaultGuestUser);
+        });
+    else setJwt(defaultGuestUser);
+    function setJwt(user) {
+        try {
+            console.log(user);
+            var token = sign(user.username, {roles:user.roles});
+            res.writeHead(204, {'Set-Cookie':JWT_COOKIE+'='+token+';path=/;httponly'});
+            res.end();
+            console.log('logged in');
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
-    catch (e) {
-        console.log(e);
-    }
-    
-    console.log('logged in');
-    res.end();
 })
+.get(prefix+'/login',
+    AUTHENTICATE,
+    (rq, rs, nx)=>{
+        console.log(rq.user);
+        rs.json(rq.user);
+        rs.end();
+    }
+)
+.get(prefix+'/logout',
+    AUTHENTICATE,
+    (rq, rs, nx)=>{
+        console.log(rq.user.username+' logout');
+        try {
+            rs.writeHead(204, {'Set-Cookie':JWT_COOKIE+'=;expires='+new Date(0)+';path=/;httponly'});
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+)
 .use(
     prefix,
     passport.authenticate("jwt", { session: false, failWithError: APP_CONFIG[ENV].jwt.failWithError }),

@@ -20,7 +20,7 @@ export class ODataService {
       });
   }
 }
-export class OdataApiMetadata {
+export class ODataApiMetadata {
     "name": string;
     "kind": string;
     "url":  string;
@@ -34,6 +34,18 @@ export class ODataResource<TModel> {
                 .replace(/@resource/g, this.name);
     return this.http
       .post(url, data, {
+        withCredentials:true
+      })
+      .map(rs=>rs.json());
+  }
+  update(data:TModel, key:((d:TModel)=>any)|any='_id') {
+    let keyId = data[typeof key === 'function'?key(data):key],
+        url = "@api/@resource('@key')"
+                .replace(/@api/g,API)
+                .replace(/@resource/g, this.name)
+                .replace(/@key/g, keyId.toString());
+    return this.http
+      .put(url, data, {
         withCredentials:true
       })
       .map(rs=>rs.json());

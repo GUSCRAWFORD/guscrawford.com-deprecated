@@ -1,21 +1,23 @@
 <form [formGroup]="formControl.group"
       (ngSubmit)="save()"
       class="form-snapping">
-
-  <button mat-raised-button
-          type="submit">SAVE</button>
-  <button mat-icon-button type="button"
-          class="float-right"
-          (click)="togglePreview()">
-    <i class="material-icons">remove_red_eye</i>
-  </button>
-
-  <div [hidden]="states.edit !== States.Showing" [@fadeInOut]="states.edit">
+  <div [hidden]="post" class="align-center">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div [hidden]="states.edit !== States.Showing || !post" [@fadeInOut]="states.edit">
     <mat-form-field class="snap-full">
-      <textarea matInput placeholder="Textarea" [(ngModel)]="post.content" formControlName="content"></textarea>
+      <textarea matInput placeholder="Textarea" [(ngModel)]="post && post.content" formControlName="content"></textarea>
     </mat-form-field>
   </div>
   <div [hidden]="states.preview !== States.Showing" [@fadeInOut]="states.preview">
-    <app-markdown-preview [content]="post.content"></app-markdown-preview>
+    <app-markdown-preview [content]="post && post.content" (click)="togglePreview()"></app-markdown-preview>
   </div>
+  <button mat-raised-button [disabled]="!formControl.group.valid"
+    class="float-right"
+    type="submit"><b>SAVE</b></button>
+  <button mat-icon-button type="button" [disabled]="!formControl.group.valid"
+    (click)="togglePreview()">
+  <i class="material-icons">remove_red_eye</i>
+  </button>
+  
 </form>

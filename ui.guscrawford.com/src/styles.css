@@ -11,6 +11,18 @@
 .align-left {
     text-align: left;
 }
+.align-center {
+    text-align: center;
+}
 .float-right {
     float:right;
+}
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+body {
+    background-color: #EEE;
 }

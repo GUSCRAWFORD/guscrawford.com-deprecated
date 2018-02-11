@@ -5,7 +5,7 @@ import {
   EventEmitter
 } from '@angular/core';
 
-import { Poster, Post, PageController, PostingActions } from '../../shared';
+import { PostManager, Post, PageController, PostingActions } from '../../shared';
 
 @Component({
   selector: 'app-posting-actions',
@@ -15,7 +15,7 @@ import { Poster, Post, PageController, PostingActions } from '../../shared';
 export class PostingActionsComponent implements OnInit {
 
   constructor(
-    private poster:Poster
+    private PostManager:PostManager
   ) { }
   @Input()
   post: Post;
@@ -25,7 +25,7 @@ export class PostingActionsComponent implements OnInit {
   }
 
   nuke() {
-    this.poster.deletePost(this.post._id)
+    this.PostManager.delete(this.post._id)
       .subscribe(
         deleted=>{
           this.action.emit(PostingActions.Delete)

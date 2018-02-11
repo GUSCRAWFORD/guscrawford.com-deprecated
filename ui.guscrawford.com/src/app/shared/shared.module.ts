@@ -27,7 +27,8 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ODataService } from './odata/odata.service';
-import { Poster } from './poster/poster.service';
+import { PostManager } from './post-manager/post-manager.service';
+import { UserManager } from './user-manager/user-manager.service';
 import { MarkdownService } from './markdown/markdown.service';
 import { MarkdownPreviewComponent } from './markdown/markdown-preview.component';
 import { LoginComponent } from './login/login.component';
@@ -55,7 +56,8 @@ import { LoginComponent } from './login/login.component';
   providers: [
     ODataService,
     UiService,
-    Poster,
+    PostManager,
+    UserManager,
     MarkdownService
   ],
   exports:[

@@ -1,10 +1,15 @@
-<mat-card *ngFor="let post of posts">
+<mat-card
+    *ngFor="let post of posts"
+    [class.mat-elevation-z8]="view.hot===post"
+    (mousemove)="view.interest(post)"
+    (mouseout)="view.interest(null)"
+>
     <app-posting [post]="post"></app-posting>
-    <mat-card-actions>
-        <app-posting-actions [post]="post" (action)="action($event)"></app-posting-actions>
+    <mat-card-actions [@fadeInOut]="view.state[post._id]">
+        <app-posting-actions [class.just-space]="view.hot!==post" [post]="post" (action)="action($event)"></app-posting-actions>
     </mat-card-actions>
 </mat-card>
 
-<div [hidden]="!pageControl.loading">{{pageControl.loading}}
+<div [hidden]="!pageControl.loading" class="align-center">
   <mat-spinner></mat-spinner>
 </div>

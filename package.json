@@ -6,7 +6,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm-run-all --parallel api ui",
     "api": "cd api.guscrawford.com && npm run api.develop",
-    "ui": "cd ui.guscrawford.com && ng serve --proxy proxy.conf.json --port 58585"
+    "ui": "cd ui.guscrawford.com && ng serve --proxy proxy.conf.json --port 58585",
+
+    "update": "npm-run-all ui.update api.update",
+    "ui.update": "cd ui.guscrawford.com && yarn install",
+    "api.update": "cd api.guscrawford.com && yarn install"
   },
   "repository": {
     "type": "git",

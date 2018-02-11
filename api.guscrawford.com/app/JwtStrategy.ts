@@ -13,6 +13,7 @@ import * as PassportJwt from 'passport-jwt';
 abstract class ExtractJwt {
     static fromCookies (cookieName:string) {
         return (req)=>{
+            if (typeof req.headers.cookie!=='string') return null;
             let cookies = req.headers.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
                 let cookie = cookies[i].split('=');
@@ -23,9 +24,10 @@ abstract class ExtractJwt {
     }
 }
 export const
+    JWT_COOKIE = 'x-token',
     JwtStrategy = PassportJwt.Strategy,
     JWT_OPTIONS = {
-        jwtFromRequest : ExtractJwt.fromCookies('x-token'),
+        jwtFromRequest : ExtractJwt.fromCookies(JWT_COOKIE),
         secretOrKey: APP_CONFIG[ENV].jwt.secret,
         issuer: APP_CONFIG[ENV].host,
         audience: APP_CONFIG[ENV].host,
@@ -34,14 +36,16 @@ export const
     JWT_STRATEGY = new JwtStrategy(JWT_OPTIONS, (jwtPayload, done)=>{
         console.log('Trying to sign in with decodable token, connecting to DB to find subscriber in token:');
         console.log(jwtPayload);
-        if (jwtPayload.sub === GUEST_USER) return done(null, {
-            username:GUEST_USER,
-            roles:[UserRoles.Guest]
-        });
+        if (jwtPayload.sub === GUEST_USER)
+            return done(null, {
+                username:GUEST_USER,
+                roles:[UserRoles.Guest]
+            });
         return (new UsersController())
             .findOne(jwtPayload.sub)
             .then(user=>{
                 if (user) console.log('Found user: %s', JSON.stringify(user));
+                
                 return done(null, user);
             },
             error=>{

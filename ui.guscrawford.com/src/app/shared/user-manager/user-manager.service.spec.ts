@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ODataService } from './OData.service';
+import { UserManager } from './user-manager.service';
 
 describe('ODataService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ODataService]
+      providers: [UserManager]
     });
   });
 
-  it('should be created', inject([ODataService], (service: ODataService) => {
+  it('should be created', inject([UserManager], (service: UserManager) => {
     expect(service).toBeTruthy();
   }));
 });

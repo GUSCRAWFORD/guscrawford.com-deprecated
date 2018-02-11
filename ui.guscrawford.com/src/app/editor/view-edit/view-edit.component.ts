@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { Poster, Post } from '../../shared';
+import { PostManager, Post } from '../../shared';
 
 @Component({
   selector: 'app-view-edit',
@@ -12,7 +12,7 @@ export class ViewEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private poster: Poster
+    private postManager: PostManager
   ) { }
   ngOnInit() {
     this.load()
@@ -25,9 +25,9 @@ export class ViewEditComponent implements OnInit {
       .flatMap(id=>{
         if (id) {
           this.id=id;
-          return this.poster.readPost(id);
+          return this.postManager.one(id);
         }
-        return Observable.of(this.poster.new());
+        return Observable.of(this.postManager.getCleanModel());
       })
       .flatMap(post=>
         Observable.of(this.post=post));

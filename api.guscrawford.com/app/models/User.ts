@@ -14,6 +14,13 @@ export class User {
     username: string;
 
     roles: UserRoles[];
+    
+    @Edm.Function
+    @Edm.String
+    echo () {
+        return "yo"
+    }
+    
 }
 export const GUEST_USER = "guest";
 export enum UserRoles {

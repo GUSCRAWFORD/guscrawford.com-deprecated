@@ -1,1 +1,1 @@
-export { ODataService, OdataApiMetadata, ODataResource } from './odata.service';
+export * from './odata.service';

@@ -12,16 +12,16 @@ import {
     GUEST_USER,
  } from '../models';
 import { DbContext } from '../db/db.guscrawford.com';
-import { Controller, ControllerContext } from '../common/Controller';
+import { MongoCrudController, ControllerContext } from '../common/MongoCrudController';
 @odata.type(Post)
-export class PostsController extends Controller<any> {
+export class PostsController extends MongoCrudController<any> {
     static onBeforeAny(controllerContext:ControllerContext) {
         console.log('Posts');
         console.log(controllerContext.requestContext.request.user);
     }
     static onBeforeInsert(controllerContext:ControllerContext) {
-        if (!controllerContext.requestContext.request.user.roles.find(role=>role===UserRoles.Guest))
-            throw new HttpRequestError(403, 'permission denied');
+        //if (!controllerContext.requestContext.request.user.roles.find(role=>role===UserRoles.Guest))
+            //throw new HttpRequestError(403, 'permission denied');
     }
     static onAfterAny(controllerContext:ControllerContext) {
         console.log(controllerContext.data)
