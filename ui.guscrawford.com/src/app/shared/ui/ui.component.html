@@ -1,11 +1,31 @@
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a routerLink="/read">Posts</a></h2>
-  </li>
-  <li>
-    <h2><a routerLink="/edit">New Post</a></h2>
-  </li>
-</ul>
 
-<router-outlet name="ui"></router-outlet>
+
+<mat-drawer-container class="drawer-container" autosize>
+  <mat-drawer #drawer class="drawer-container-drawer-sidenav" mode="push">
+    <p>Auto-resizing sidenav</p>
+    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+    <button type="button" mat-button (click)="drawer.toggle()">
+      Toggle sidenav
+    </button>
+    <h2>Here are some links to help you start: </h2>
+    <ul>
+      <li>
+        <h2><a routerLink="/read">Posts</a></h2>
+      </li>
+      <li>
+        <h2><a routerLink="/edit">New Post</a></h2>
+      </li>
+    </ul>
+  </mat-drawer>
+
+  <div class="drawer-container-sidenav-content">
+    <mat-toolbar>My App</mat-toolbar>
+    <div class="drawer-container-sidenav-content-view-wrapper">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        Toggle sidenav
+      </button>
+      <router-outlet name="ui"></router-outlet>
+    </div>
+  </div>
+
+</mat-drawer-container>

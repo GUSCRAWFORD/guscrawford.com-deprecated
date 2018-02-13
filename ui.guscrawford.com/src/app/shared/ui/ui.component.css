@@ -1,0 +1,7 @@
+.drawer-container,
+.drawer-container-drawer-sidenav {
+    height:100%;
+}
+.drawer-container-sidenav-content-view-wrapper{
+    margin:12px;
+}

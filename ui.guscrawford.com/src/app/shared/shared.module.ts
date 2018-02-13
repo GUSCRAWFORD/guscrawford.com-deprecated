@@ -22,7 +22,9 @@ import {
   MatFormField,
   MatInputModule,
   MatButtonModule,
-  MatTabsModule
+  MatTabsModule,
+  MatSidenavModule,
+  MatToolbarModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -45,6 +47,8 @@ import { LoginComponent } from './login/login.component';
     MatInputModule,
     MatButtonModule,
     MatTabsModule,
+    MatSidenavModule,
+    MatToolbarModule,
     FormsModule,
     ReactiveFormsModule
   ],
@@ -69,6 +73,8 @@ import { LoginComponent } from './login/login.component';
     MatInputModule,
     MatButtonModule,
     MatTabsModule,
+    MatSidenavModule,
+    MatToolbarModule,
     MarkdownPreviewComponent,
     ReactiveFormsModule,
     LoginComponent
