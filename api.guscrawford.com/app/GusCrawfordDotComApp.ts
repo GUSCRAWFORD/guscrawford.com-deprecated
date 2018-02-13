@@ -40,7 +40,7 @@ app
 .use(express.json())
 .post(prefix+'/login', (req, res, next)=>{
     console.log('login');
-    let defaultGuestUser = {username:"guest", roles:[UserRoles.Guest]};
+    let defaultGuestUser = {_id:"guest", roles:[UserRoles.Guest]};
     console.log(req.body)
     if (req.body.username && req.body.password)
         (new UsersController()).login(req.body.username,req.body.password)
@@ -55,7 +55,7 @@ app
     function setJwt(user) {
         try {
             console.log(user);
-            var token = sign(user.username, {roles:user.roles});
+            var token = sign(user._id, {roles:user.roles||[UserRoles.Guest]});
             res.writeHead(204, {'Set-Cookie':JWT_COOKIE+'='+token+';path=/;httponly'});
             res.end();
             console.log('logged in');

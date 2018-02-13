@@ -10,6 +10,7 @@ import { createQuery } from "odata-v4-mongodb";
 import { User } from '../models/User';
 import { DbContext } from '../db/db.guscrawford.com';
 import { MongoCrudController, ControllerContext } from '../common/MongoCrudController';
+const SALT = '?!@#@#@#';
 @odata.type(User)
 export class UsersController extends MongoCrudController<User> {
     static onBeforeAny(controllerContext:ControllerContext) {
@@ -24,9 +25,9 @@ export class UsersController extends MongoCrudController<User> {
         let user = ctx.data;
         if ((ctx as any).setPassword) {
             console.log('Updating password...');
-            PasswordHash.generate((ctx.data as any).setPassword)
+            return PasswordHash.generate((ctx.data as any).setPassword)
                 .then(hash=>{
-                    ctx.dbContext.db.collection("Hash")
+                    return ctx.dbContext.db.collection("Hash")
                         .updateOne({item:user._id},
                         {$set:{
                             hash:hash
@@ -39,10 +40,10 @@ export class UsersController extends MongoCrudController<User> {
         console.log('Adding password (%s) for %s :',(ctx as any).setPassword, ctx.data._id)
         let user = ctx.data;
         if ((ctx as any).setPassword) {
-            PasswordHash.generate((ctx as any).setPassword)
+            return PasswordHash.generate((ctx as any).setPassword)
                 .then(hash=>{    
                     console.log('hash: %s',hash);
-                    ctx.dbContext.db.collection("Hash")
+                    return ctx.dbContext.db.collection("Hash")
                         .insertOne({
                             item:user._id,
                             hash:hash
@@ -57,15 +58,15 @@ export class UsersController extends MongoCrudController<User> {
         const
             dbContext = await new DbContext().connect();
         let result = { verified: false, user: null, hash:null};
+        let compareHash = await PasswordHash.generate(password)
         await dbContext.db.collection(MongoCrudController.defaultName(this))
             .findOne({username:username})
             .then(user=>{
                 result.user = user;
                 return dbContext.db.collection("Hash")
                     .findOne({item:user._id}).then(hash=>{
+                        console.log(hash);
                         result.hash = hash;
-                        console.log('verifying '+hash.hash+' against: '+password+' ('+PasswordHash.generate(password)+')')
-                        console.log(PasswordHash.verify(password, hash.hash));
                         return PasswordHash
                             .verify(password, hash.hash)
                             .then(verified=>{

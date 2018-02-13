@@ -8,30 +8,14 @@ import {
 import { createQuery } from "odata-v4-mongodb";
 import { DbContext } from '../db/db.guscrawford.com';
 export class MongoCrudController<T extends {_id:ObjectID}> extends ODataController {
-    static createMongoQuery(query:ODataQuery) {
-        return createQuery(query);
-    }
-    static defaultName(_this: any) {
-        const controllerPostifx = "Controller";
-        if (_this.collectionName )
-            return _this.collectionName;
-        if (_this.prototype)
-            return _this.prototype.constructor.name.split(controllerPostifx)[0];
-        else 
-            return _this.constructor.name.split(controllerPostifx)[0];
-    }
-    static onHook(_this: any, hookName:string, controllerContext:ControllerContext) {
-        if (typeof _this['on'+hookName] === 'function')
-            _this['on'+hookName](controllerContext);
-    }
     @odata.GET
     async find ( @odata.query query?: ODataQuery, @odata.context requestContext?: ODataHttpContext) {
         const
             dbContext = await new DbContext().connect(),
             mongodbQuery = createQuery(query),
             controllerContext = new ControllerContext(dbContext, requestContext, null, null, query, mongodbQuery);
-        MongoCrudController.onHook(this, 'BeforeAny', controllerContext);
-        MongoCrudController.onHook(this, 'BeforeQuery', controllerContext);
+        await MongoCrudController.onHook(this, 'BeforeAny', controllerContext);
+        await MongoCrudController.onHook(this, 'BeforeQuery', controllerContext);
         if (mongodbQuery && typeof mongodbQuery.query._id == "string")
             mongodbQuery.query._id = new ObjectID(mongodbQuery.query._id);
         let result = typeof mongodbQuery.limit == "number" && mongodbQuery.limit === 0 ? [] : await dbContext.db.collection(MongoCrudController.defaultName(this))
@@ -42,8 +26,8 @@ export class MongoCrudController<T extends {_id:ObjectID}> extends ODataControll
                 .sort(mongodbQuery.sort)
                 .toArray();
         controllerContext.data = result;
-        MongoCrudController.onHook(this, 'AfterAny', controllerContext);
-        MongoCrudController.onHook(this, 'AfterQuery', controllerContext);
+        await MongoCrudController.onHook(this, 'AfterAny', controllerContext);
+        await MongoCrudController.onHook(this, 'AfterQuery', controllerContext);
         dbContext.client.close();
         return result;
     }
@@ -55,8 +39,8 @@ export class MongoCrudController<T extends {_id:ObjectID}> extends ODataControll
             controllerContext = new ControllerContext(dbContext, requestContext, null, key, query, mongoQuery);
         let keyObject;
         try {keyObject = new ObjectID(key);}catch(ex){}
-        MongoCrudController.onHook(this, 'BeforeAny', controllerContext);
-        MongoCrudController.onHook(this, 'BeforeRead', controllerContext);
+        await MongoCrudController.onHook(this, 'BeforeAny', controllerContext);
+        await MongoCrudController.onHook(this, 'BeforeRead', controllerContext);
         let result = dbContext.db.collection(MongoCrudController.defaultName(this))
             .findOne({_id:keyObject || key},{
                 fields: mongoQuery.projection
@@ -64,8 +48,8 @@ export class MongoCrudController<T extends {_id:ObjectID}> extends ODataControll
                 controllerContext.data = result;
                 return result;
             });
-        MongoCrudController.onHook(this, 'AfterAny', controllerContext);
-        MongoCrudController.onHook(this, 'AfterRead', controllerContext);
+        await MongoCrudController.onHook(this, 'AfterAny', controllerContext);
+        await MongoCrudController.onHook(this, 'AfterRead', controllerContext);
         dbContext.client.close();
         return result;
     }
@@ -75,8 +59,8 @@ export class MongoCrudController<T extends {_id:ObjectID}> extends ODataControll
             dbContext = await new DbContext().connect(),
             controllerContext = new ControllerContext(dbContext, requestContext, data);
         
-        MongoCrudController.onHook(this, 'BeforeAny', controllerContext);
-        MongoCrudController.onHook(this, 'BeforeInsert', controllerContext);
+        await MongoCrudController.onHook(this, 'BeforeAny', controllerContext);
+        await MongoCrudController.onHook(this, 'BeforeInsert', controllerContext);
         var result = await dbContext.db
         .collection(MongoCrudController.defaultName(this))
         .insertOne(data)
@@ -84,8 +68,8 @@ export class MongoCrudController<T extends {_id:ObjectID}> extends ODataControll
             data._id = result.insertedId;
             return data;
         });
-        MongoCrudController.onHook(this, 'AfterAny', controllerContext);
-        MongoCrudController.onHook(this, 'AfterInsert', controllerContext);
+        await MongoCrudController.onHook(this, 'AfterAny', controllerContext);
+        await MongoCrudController.onHook(this, 'AfterInsert', controllerContext);
         dbContext.client.close();
         return result;
     }
@@ -97,8 +81,8 @@ export class MongoCrudController<T extends {_id:ObjectID}> extends ODataControll
         if (data._id) delete data._id;
         let keyId, result;
         try{ keyId = new ObjectID(key); }catch(err){ keyId = key; }
-        MongoCrudController.onHook(this, 'BeforeAny', controllerContext);
-        MongoCrudController.onHook(this, 'BeforeUpsert', controllerContext);
+        await MongoCrudController.onHook(this, 'BeforeAny', controllerContext);
+        await MongoCrudController.onHook(this, 'BeforeUpsert', controllerContext);
         result = await dbContext.db
         .collection(MongoCrudController.defaultName(this))
         .updateOne(
@@ -111,8 +95,8 @@ export class MongoCrudController<T extends {_id:ObjectID}> extends ODataControll
             data._id = result.upsertedId
             return data._id ? data : null;
         });
-        MongoCrudController.onHook(this, 'AfterAny', controllerContext);
-        MongoCrudController.onHook(this, 'AfterUpsert', controllerContext);
+        await MongoCrudController.onHook(this, 'AfterAny', controllerContext);
+        await MongoCrudController.onHook(this, 'AfterUpsert', controllerContext);
         dbContext.client.close();
         return result;
     }
@@ -124,16 +108,16 @@ export class MongoCrudController<T extends {_id:ObjectID}> extends ODataControll
         if (delta._id) delete delta._id;
         let keyId, result;
         try{ keyId = new ObjectID(key); }catch(err){ keyId = key; }
-        MongoCrudController.onHook(this, 'BeforeAny', controllerContext);
-        MongoCrudController.onHook(this, 'BeforeUpdate', controllerContext);
+        await MongoCrudController.onHook(this, 'BeforeAny', controllerContext);
+        await MongoCrudController.onHook(this, 'BeforeUpdate', controllerContext);
         result = await dbContext.db
             .collection(MongoCrudController.defaultName(this))
             .updateOne(
                 { _id: keyId },
                 { $set: delta }
             ).then(result => result.modifiedCount);
-        MongoCrudController.onHook(this, 'AfterAny', controllerContext);
-        MongoCrudController.onHook(this, 'AfterUpdate', controllerContext);
+        await MongoCrudController.onHook(this, 'AfterAny', controllerContext);
+        await MongoCrudController.onHook(this, 'AfterUpdate', controllerContext);
         dbContext.client.close();
         return result;
     }
@@ -145,16 +129,32 @@ export class MongoCrudController<T extends {_id:ObjectID}> extends ODataControll
             controllerContext = new ControllerContext(dbContext, requestContext, null, key);
         let keyId, result;
         try{ keyId = new ObjectID(key); }catch(err){ keyId = key; }
-        MongoCrudController.onHook(this, 'BeforeAny', controllerContext);
-        MongoCrudController.onHook(this, 'BeforeDelete', controllerContext);
+        await MongoCrudController.onHook(this, 'BeforeAny', controllerContext);
+        await MongoCrudController.onHook(this, 'BeforeDelete', controllerContext);
         result = await dbContext.db
             .collection(MongoCrudController.defaultName(this))
             .deleteOne({ _id: keyId })
             .then(result => result.deletedCount);
-        MongoCrudController.onHook(this, 'AfterAny', controllerContext);
-        MongoCrudController.onHook(this, 'AftereDelete', controllerContext);
+        await MongoCrudController.onHook(this, 'AfterAny', controllerContext);
+        await MongoCrudController.onHook(this, 'AftereDelete', controllerContext);
         dbContext.client.close();
         return result;
+    }    static createMongoQuery(query:ODataQuery) {
+        return createQuery(query);
+    }
+    static defaultName(_this: any) {
+        const controllerPostifx = "Controller";
+        if (_this.collectionName )
+            return _this.collectionName;
+        if (_this.prototype)
+            return _this.prototype.constructor.name.split(controllerPostifx)[0];
+        else 
+            return _this.constructor.name.split(controllerPostifx)[0];
+    }
+    static async onHook(_this: any, hookName:string, controllerContext:ControllerContext): Promise<any> {
+        if (typeof _this['on'+hookName] === 'function')
+            return _this['on'+hookName](controllerContext);
+        else return new Promise((resolve, reject)=>resolve());
     }
 }
 export class ControllerContext {
