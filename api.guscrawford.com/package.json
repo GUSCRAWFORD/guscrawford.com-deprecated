@@ -28,6 +28,7 @@
     "passport": "^0.4.0",
     "passport-http": "^0.3.0",
     "passport-jwt": "^3.0.1",
-    "password-hash": "^1.2.2"
+    "password-hash": "^1.2.2",
+    "source-map-support": "^0.5.3"
   }
 }

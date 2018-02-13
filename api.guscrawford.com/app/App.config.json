@@ -17,5 +17,8 @@
         "jwt":{
             "failWithError":false
         }
+    },
+    "errors":{
+        "failed-login":"Incorrect username / password"
     }
 }

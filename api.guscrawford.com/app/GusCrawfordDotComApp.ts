@@ -1,3 +1,10 @@
+
+const
+    LOCAL_ENV = "local",
+    DEFAULT_ROOT_REL = "../app/",
+    ENV = process.env.NODE_ENV || LOCAL_ENV,
+    APP_CONFIG = require(DEFAULT_ROOT_REL+'App.config'),
+    SOURCE_MAP_SUPPORT = ENV===LOCAL_ENV?require('source-map-support').install():null;
 import { ObjectID } from 'mongodb';
 import {
     ODataServer,
@@ -12,9 +19,6 @@ import {
 import {
     UserRoles
 } from './models';
-const 
-    ENV = process.env.NODE_ENV || "local",
-    APP_CONFIG = require('../app/App.config');
 
 @odata.namespace("GusCrawfordDotCom")
 @odata.controller(PostsController, true)
@@ -40,12 +44,12 @@ app
 .use(express.json())
 .post(prefix+'/login', (req, res, next)=>{
     console.log('login');
+    console.log(new Error('yo'))
     let defaultGuestUser = {_id:"guest", roles:[UserRoles.Guest]};
-    console.log(req.body)
     if (req.body.username && req.body.password)
         (new UsersController()).login(req.body.username,req.body.password)
         .then(verifiedUser=>{
-            setJwt(verifiedUser || defaultGuestUser);
+            setJwt(verifiedUser);
         })
         .catch(err=>{
             console.log(err);
@@ -54,7 +58,14 @@ app
     else setJwt(defaultGuestUser);
     function setJwt(user) {
         try {
-            console.log(user);
+            if (!user) {
+                res.writeHead(401, {
+                    'Set-Cookie':JWT_COOKIE+'=;expires='+new Date(0)+';path=/;httponly'
+                });
+                res.write('Unauthorized')
+                res.end();
+                return;
+            }
             var token = sign(user._id, {roles:user.roles||[UserRoles.Guest]});
             res.writeHead(204, {'Set-Cookie':JWT_COOKIE+'='+token+';path=/;httponly'});
             res.end();

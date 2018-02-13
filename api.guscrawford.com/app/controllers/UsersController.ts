@@ -41,8 +41,7 @@ export class UsersController extends MongoCrudController<User> {
         let user = ctx.data;
         if ((ctx as any).setPassword) {
             return PasswordHash.generate((ctx as any).setPassword)
-                .then(hash=>{    
-                    console.log('hash: %s',hash);
+                .then(hash=>{
                     return ctx.dbContext.db.collection("Hash")
                         .insertOne({
                             item:user._id,
@@ -65,7 +64,6 @@ export class UsersController extends MongoCrudController<User> {
                 result.user = user;
                 return dbContext.db.collection("Hash")
                     .findOne({item:user._id}).then(hash=>{
-                        console.log(hash);
                         result.hash = hash;
                         return PasswordHash
                             .verify(password, hash.hash)
@@ -76,7 +74,6 @@ export class UsersController extends MongoCrudController<User> {
                     });
             });
         dbContext.client.close();
-        console.log(result)
         return result.verified?result.user:null;
     }
 }
