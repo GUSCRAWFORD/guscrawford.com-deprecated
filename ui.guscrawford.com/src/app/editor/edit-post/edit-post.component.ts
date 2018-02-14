@@ -26,10 +26,12 @@ export class EditPostComponent implements OnInit {
     private builder: FormBuilder,
     private postManager: PostManager
   ) { }
+
   @Input()
   post: Post;
   States = AnimationBox.States;
   formControl = new FormController(this.builder, 'postForm');
+
   ngOnInit() {
     this.formControl
       .control('content','', Validators.required);
@@ -38,7 +40,9 @@ export class EditPostComponent implements OnInit {
   save() {
     return this.postManager
       [this.post._id?'update':'create'](this.post)
-      .subscribe(next=>next, err=>err, ()=>{})
+      .subscribe(post=>{
+        if (!this.post._id) this.post._id = post._id;
+      }, err=>err, ()=>{})
   }
   togglePreview() {
     let other = this.states.preview;

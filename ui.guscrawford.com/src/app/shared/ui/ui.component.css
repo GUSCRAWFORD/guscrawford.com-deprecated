@@ -5,3 +5,15 @@
 .drawer-container-sidenav-content-view-wrapper{
     margin:12px;
 }
+.drawer-container-drawer-sidenav {
+    padding-right:14px;
+}
+mat-toolbar.toolbar {
+    position:fixed;
+    z-index:10000;
+    top:0px;
+    left:0px;
+}
+mat-toolbar.toolbar-space {
+    visibility: hidden;
+}

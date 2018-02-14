@@ -24,7 +24,8 @@ import {
   MatButtonModule,
   MatTabsModule,
   MatSidenavModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatExpansionModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -34,6 +35,9 @@ import { UserManager } from './user-manager/user-manager.service';
 import { MarkdownService } from './markdown/markdown.service';
 import { MarkdownPreviewComponent } from './markdown/markdown-preview.component';
 import { LoginComponent } from './login/login.component';
+import { UiToolbarComponent } from './ui/ui-toolbar/ui-toolbar.component';
+import { UiDrawerMenuComponent } from './ui/ui-drawer-menu/ui-drawer-menu.component';
+import { UiDrawerPageWrapComponent } from './ui/ui-drawer-page-wrap/ui-drawer-page-wrap.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -49,13 +53,17 @@ import { LoginComponent } from './login/login.component';
     MatTabsModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatExpansionModule,
     FormsModule,
     ReactiveFormsModule
   ],
   declarations: [
     UiComponent,
     MarkdownPreviewComponent,
-    LoginComponent
+    LoginComponent,
+    UiToolbarComponent,
+    UiDrawerMenuComponent,
+    UiDrawerPageWrapComponent
   ],
   providers: [
     ODataService,
@@ -75,6 +83,7 @@ import { LoginComponent } from './login/login.component';
     MatTabsModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatExpansionModule,
     MarkdownPreviewComponent,
     ReactiveFormsModule,
     LoginComponent

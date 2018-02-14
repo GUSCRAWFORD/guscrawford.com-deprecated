@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
+import { UiService } from './ui.service';
 @Component({
   selector: 'app-ui',
   templateUrl: './ui.component.html',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UiComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private ui: UiService
+  ) { }
+  @ViewChild('drawer')
+  drawer: any;
 
   ngOnInit() {
+    this.ui.onDrawerMenuStateChange.subscribe(
+      change=>{
+        this.drawer.toggle()
+      }
+    )
   }
 
 }

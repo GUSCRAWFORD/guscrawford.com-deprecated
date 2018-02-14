@@ -4,10 +4,11 @@ import {
     ODataHttpContext,
     ODataController,
     ODataQuery,
-    odata
+    odata,
+    HttpRequestError
 } from "odata-v4-server";
 import { createQuery } from "odata-v4-mongodb";
-import { User } from '../models/User';
+import { User, UserRoles } from '../models/User';
 import { DbContext } from '../db/db.guscrawford.com';
 import { MongoCrudController, ControllerContext } from '../common/MongoCrudController';
 const SALT = '?!@#@#@#';
@@ -21,7 +22,17 @@ export class UsersController extends MongoCrudController<User> {
             delete controllerContext.data.password;
         }
     }
-    static onAfterUpdate(ctx:ControllerContext) {
+
+    static onBeforeUpsert(controllerContext:ControllerContext) {
+        UsersController.restrictTo(controllerContext, UserRoles.Member)
+    }
+    static onBeforeUpdate(controllerContext:ControllerContext) {
+        UsersController.restrictTo(controllerContext, UserRoles.Member)
+    }
+    static onBeforeInsert(controllerContext:ControllerContext) {
+        UsersController.restrictTo(controllerContext, UserRoles.Member)
+    }
+    static onAfterUpsert(ctx:ControllerContext) {
         let user = ctx.data;
         if ((ctx as any).setPassword) {
             console.log('Updating password...');
@@ -75,6 +86,13 @@ export class UsersController extends MongoCrudController<User> {
             });
         dbContext.client.close();
         return result.verified?result.user:null;
+    }
+    
+    static restrictTo(controllerContext: ControllerContext, role:UserRoles) {
+        if (!controllerContext.requestContext.request.user)
+            throw new HttpRequestError(403, 'Forbidden');
+        if (!controllerContext.requestContext.request.user.roles.find(r=>r===role))
+            throw new HttpRequestError(403, 'Forbidden');
     }
 }
 import * as bcrypt from 'bcrypt';

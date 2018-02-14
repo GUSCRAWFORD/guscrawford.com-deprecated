@@ -1,11 +1,13 @@
 <div class="align-right">
 
 
-    <button type="button" mat-icon-button [routerLink]="['/edit',post._id]">
+    <button type="button" mat-icon-button [routerLink]="['/edit',post._id]"
+            [hidden]="!userHasRole(UserRoles.Member)">
         <i class="material-icons">mode_edit</i>
     </button>
     
-    <button type="button" mat-icon-button (click)="nuke()">
+    <button type="button" mat-icon-button (click)="nuke()"
+            [hidden]="!userHasRole(UserRoles.Member)">
         <i class="material-icons">delete_forever</i>
     </button>
 </div>

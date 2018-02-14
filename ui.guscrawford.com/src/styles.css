@@ -22,9 +22,20 @@
     display: table;
     clear: both;
 }
-
+.no-margin {
+    margin:0px;
+}
+.posting .mat-expansion-panel-body,
+.no-padding {
+    padding:0px;
+}
+.hide-title h1 {
+    visibility: hidden;
+    display: none;
+}
 body {
     background-color: #EEE;
+    color: #444;
 }
 body.inner-scroll {
     margin:0px;

@@ -5,7 +5,7 @@ import {
     animate,
     transition
   } from '@angular/animations';
-enum AnimationBoxStates {
+export enum AnimationBoxStates {
     Void,
     Hidden,
     Showing

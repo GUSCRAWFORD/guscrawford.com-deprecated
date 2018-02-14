@@ -33,6 +33,7 @@ export class ViewReadComponent implements OnInit {
   view = {
     hot:null,
     state:{},
+    showContent:{},
     interest:(post:Post)=>{
       if (post && this.view.hot !== post) {
         this.view.state[post._id] = AnimationBox.States.Showing;
@@ -42,7 +43,6 @@ export class ViewReadComponent implements OnInit {
         this.view.state[this.view.hot._id] = AnimationBox.States.Hidden;
         this.view.hot = null;
       }
-
     }
   }
   id: string;

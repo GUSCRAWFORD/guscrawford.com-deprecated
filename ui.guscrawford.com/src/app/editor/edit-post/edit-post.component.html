@@ -12,12 +12,12 @@
   <div [hidden]="states.preview !== States.Showing" [@fadeInOut]="states.preview">
     <app-markdown-preview [content]="post && post.content" (click)="togglePreview()"></app-markdown-preview>
   </div>
-  <button mat-raised-button [disabled]="!formControl.group.valid"
+  <button mat-button [disabled]="!formControl.group.valid"
     class="float-right"
     type="submit"><b>SAVE</b></button>
   <button mat-icon-button type="button" [disabled]="!formControl.group.valid"
     (click)="togglePreview()">
-  <i class="material-icons">remove_red_eye</i>
+    <i class="material-icons">remove_red_eye</i>
   </button>
   
 </form>
