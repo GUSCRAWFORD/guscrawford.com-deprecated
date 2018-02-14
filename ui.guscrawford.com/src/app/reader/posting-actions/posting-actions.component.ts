@@ -33,10 +33,9 @@ export class PostingActionsComponent implements OnInit {
     this.ui.user.subscribe(user=>this.user=user);
   }
   userHasRole(role:UserRoles) {
-    return true;
-    // if (!this.user) return false;
-    // if (this.user && this.user.roles.find(r=>r===role)) return true;
-    // return false;
+    if (!this.user) return false;
+    if (this.user && this.user.roles.find(r=>r===role)) return true;
+    return false;
   }
   nuke() {
     this.PostManager.delete(this.post._id)

@@ -5,7 +5,7 @@
     (mouseout)="view.interest(null)"
     (click)="view.showContent[post._id]=view.showContent[post._id]?0:1"
 >
-    <mat-card-title-group>
+    <mat-card-title-group (click)="post.readMore = true" class="pointer">
         <mat-card-title>
             {{post.title}}
         </mat-card-title>

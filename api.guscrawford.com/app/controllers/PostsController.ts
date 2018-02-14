@@ -11,7 +11,7 @@ import {
     Post,
     GUEST_USER,
  } from '../models';
-import { DbContext } from '../db/db.guscrawford.com';
+import { DbContext } from '../db/DbContext';
 import { MongoCrudController, ControllerContext } from '../common/MongoCrudController';
 @odata.type(Post)
 export class PostsController extends MongoCrudController<any> {

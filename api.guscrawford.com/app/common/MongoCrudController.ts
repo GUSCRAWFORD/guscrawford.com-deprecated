@@ -6,7 +6,7 @@ import {
     odata
 } from "odata-v4-server";
 import { createQuery } from "odata-v4-mongodb";
-import { DbContext } from '../db/db.guscrawford.com';
+import { DbContext } from '../db/DbContext';
 export class MongoCrudController<T extends {_id:ObjectID}> extends ODataController {
     @odata.GET
     async find ( @odata.query query?: ODataQuery, @odata.context requestContext?: ODataHttpContext) {

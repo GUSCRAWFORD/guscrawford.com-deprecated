@@ -9,7 +9,7 @@ import {
 } from "odata-v4-server";
 import { createQuery } from "odata-v4-mongodb";
 import { User, UserRoles } from '../models/User';
-import { DbContext } from '../db/db.guscrawford.com';
+import { DbContext } from '../db/DbContext';
 import { MongoCrudController, ControllerContext } from '../common/MongoCrudController';
 const SALT = '?!@#@#@#';
 @odata.type(User)
