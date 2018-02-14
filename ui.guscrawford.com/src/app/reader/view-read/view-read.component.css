@@ -11,7 +11,7 @@ mat-expansion-panel {
 app-posting-actions {
     color: rgba(0, 0, 0, 0.6)
 }
-img, .gently-hide-image {
+img {
     position:absolute;
     top:0px;
     left:0px;
@@ -20,7 +20,9 @@ img, .gently-hide-image {
 -webkit-mask-size: 100% 100%;
 -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
    color-stop(0.00,  rgba(0,0,0,1)),
-   color-stop(0.33,  rgba(0,0,0,0)));
+   color-stop(0.25,  rgba(0,0,0,0)));
+   width:100%;
+   height:auto;
 }
 .card-content {
     position:relative;
