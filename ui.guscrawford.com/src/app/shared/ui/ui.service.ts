@@ -55,7 +55,6 @@ export class UiService {
   }
   getToken(refresh?:boolean, username?:string, password?:string) : Observable<User> {
     return this._user.loggingIn = new Observable<User>(observer=>{
-      this._user.loggedIn = true;
       this.userManager.me().subscribe(
         user=>{
             this._user.loggedIn = user;

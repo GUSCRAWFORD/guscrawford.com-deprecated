@@ -28,9 +28,12 @@ export class PostingActionsComponent implements OnInit {
 
   @Output()
   action = new EventEmitter<PostingActions>();
-
+  showEditActions = false;
   ngOnInit() {
-    this.ui.user.subscribe(user=>this.user=user);
+    this.ui.user.subscribe(user=>{
+      this.user=user;
+      this.showEditActions = this.userHasRole(UserRoles.Member);
+    });
   }
   userHasRole(role:UserRoles) {
     if (!this.user) return false;

@@ -16,7 +16,7 @@ import { MongoCrudController, ControllerContext } from '../common/MongoCrudContr
 @odata.type(Post)
 export class PostsController extends MongoCrudController<any> {
     static onBeforeAny(controllerContext:ControllerContext) {
-        PostsController.restrictTo(controllerContext, UserRoles.Member)
+        //PostsController.restrictTo(controllerContext, UserRoles.Member)
     }
     static onBeforeInsert(controllerContext:ControllerContext) {
         PostsController.restrictTo(controllerContext, UserRoles.Member)
@@ -25,7 +25,7 @@ export class PostsController extends MongoCrudController<any> {
         PostsController.restrictTo(controllerContext, UserRoles.Member)
     }
     static onAfterAny(controllerContext:ControllerContext) {
-        console.log(controllerContext.data)
+        //console.log(controllerContext.data)
     }
 
     static restrictTo(controllerContext: ControllerContext, role:UserRoles) {

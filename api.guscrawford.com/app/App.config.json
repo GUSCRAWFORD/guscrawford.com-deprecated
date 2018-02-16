@@ -20,6 +20,10 @@
         "authentication":"jwt",
         "jwt":{
             "failWithError":false
+        },
+        "DB_ENV" : {
+            "schema":"GusCrawfordDotCom",
+            "uri":"mongodb://localhost:27017"
         }
     },
     "errors":{
