@@ -8,7 +8,7 @@ import {
   PageController,
   AnimationBox,*/
 
-  Post/*,PostingActions, UserManager,
+  Post, PostView/*,PostingActions, UserManager,
   PostManager, UiService*/
 } from '../../../shared';
 @Component({
@@ -24,7 +24,7 @@ export class ViewPostingComponent implements OnInit, AfterViewChecked {
   @ViewChild(MatExpansionPanel)
   expPanel: MatExpansionPanel;
   @Input()
-  post: Post;
+  post: Post&PostView;
   @Input()
   collapsible: boolean = true;
   ngOnInit() {
