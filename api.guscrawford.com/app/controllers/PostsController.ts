@@ -11,28 +11,37 @@ import {
     Post,
     GUEST_USER,
  } from '../models';
-import { DbContext } from '../db/DbContext';
-import { MongoCrudController, ControllerContext } from '../common/MongoCrudController';
+import { DbContext } from '../common/DbContext';
+import { AccessControl, ControllerContext } from './AccessControl';
 @odata.type(Post)
-export class PostsController extends MongoCrudController<any> {
-    static onBeforeAny(controllerContext:ControllerContext) {
+export class PostsController extends AccessControl<Post> {
+    static onBeforeAny(controllerContext:ControllerContext<Post>) {
         //PostsController.restrictTo(controllerContext, UserRoles.Member)
     }
-    static onBeforeInsert(controllerContext:ControllerContext) {
-        PostsController.restrictTo(controllerContext, UserRoles.Member)
+    static onBeforeInsert(controllerContext:ControllerContext<Post>) {
+        PostsController.restrict(controllerContext).to.atLeast(UserRoles.Member);
+        controllerContext.data.modified = controllerContext.data.created = {
+            on : new Date().valueOf(),
+            by: PostsController.user(controllerContext).username
+        };
     }
-    static onBeforeUpsert(controllerContext:ControllerContext) {
-        PostsController.restrictTo(controllerContext, UserRoles.Member)
+    static onBeforeUpsert(controllerContext:ControllerContext<Post>) {
+        PostsController.restrict(controllerContext).to.atLeast(UserRoles.Member);
+        controllerContext.data.modified = {
+            on : new Date().valueOf(),
+            by: PostsController.user(controllerContext).username
+        };
     }
-    static onAfterAny(controllerContext:ControllerContext) {
+    static onBeforeUpdate(controllerContext:ControllerContext<Post>) {
+        PostsController.restrict(controllerContext).to.atLeast(UserRoles.Member);
+        controllerContext.data.modified = {
+            on : new Date().valueOf(),
+            by: PostsController.user(controllerContext).username
+        };
+    }
+    static onAfterAny(controllerContext:ControllerContext<Post>) {
         //console.log(controllerContext.data)
     }
 
-    static restrictTo(controllerContext: ControllerContext, role:UserRoles) {
-        if (!controllerContext.requestContext.request.user)
-            throw new HttpRequestError(403, 'Forbidden');
-        if (!controllerContext.requestContext.request.user.roles.find(r=>r===role))
-            throw new HttpRequestError(403, 'Forbidden');
-    }
 
 }

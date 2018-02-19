@@ -6,8 +6,8 @@ import {
     odata
 } from "odata-v4-server";
 import { createQuery } from "odata-v4-mongodb";
-import { DbContext } from '../db/DbContext';
-export class MongoCrudController<T extends {_id:ObjectID}> extends ODataController {
+import { DbContext } from './DbContext';
+export class MongoCrudController<T extends {_id?:ObjectID | string}> extends ODataController {
     @odata.GET
     async find ( @odata.query query?: ODataQuery, @odata.context requestContext?: ODataHttpContext) {
         const
@@ -151,17 +151,20 @@ export class MongoCrudController<T extends {_id:ObjectID}> extends ODataControll
         else 
             return _this.constructor.name.split(controllerPostifx)[0];
     }
-    static async onHook(_this: any, hookName:string, controllerContext:ControllerContext): Promise<any> {
+    static async onHook<T extends {_id?:ObjectID | string}>(_this: any, hookName:string, controllerContext:ControllerContext<T>): Promise<any> {
+
+        if (!_this.prototype) _this = _this.constructor;
+        console.log(_this);
         if (typeof _this['on'+hookName] === 'function')
             return _this['on'+hookName](controllerContext);
         else return new Promise((resolve, reject)=>resolve());
     }
 }
-export class ControllerContext {
+export class ControllerContext<T extends {_id?:ObjectID | string}> {
     constructor(
         public dbContext?:DbContext,
         public requestContext?:ODataHttpContext,
-        public data?: any,
+        public data?: T,
         public key?: any,
         public query?: ODataQuery,
         public mongoQuery?: any,

@@ -86,7 +86,8 @@ import { UiDrawerPageWrapComponent } from './ui/ui-drawer-page-wrap/ui-drawer-pa
     MatExpansionModule,
     MarkdownPreviewComponent,
     ReactiveFormsModule,
-    LoginComponent
+    LoginComponent,
+    UiComponent
   ]
 })
 export class SharedModule { }

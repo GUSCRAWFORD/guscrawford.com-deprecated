@@ -1,0 +1,46 @@
+<mat-card-title-group (click)="expPanel?expPanel.open():null" class="pointer">
+  <mat-card-title>
+      {{post && post.title}}
+  </mat-card-title>
+  <mat-card-subtitle>
+    {{post && post.modified && post.modified.on | date}} by {{post && post.modified && post.modified.by}}
+  </mat-card-subtitle>
+</mat-card-title-group>
+
+<img *ngIf="post"
+  [hidden]="!post.imageLoad"
+  (load)="post.imageLoad=true"
+  [alt]="post.imageAlt"
+  [title]="post.imageAlt"
+  [src]="post.image||''">
+<div class="card-content" *ngIf="post">
+      <app-markdown-preview
+        [hidden]="post.readMore || !collapsible"
+        class="hide-title"
+        [content]="post && post.preview"></app-markdown-preview>
+  <mat-expansion-panel #expPanel *ngIf="collapsible else display" (opened)="post.readMore = true"
+                  (closed)="post.readMore = false"
+                  class="mat-elevation-z0 posting">
+      <mat-expansion-panel-header>
+          <mat-panel-description>
+              Read {{post.readMore ? 'Less' : 'More'}}
+          </mat-panel-description>
+      </mat-expansion-panel-header>
+      <app-posting [post]="post"
+                  (title)="post.title=$event"
+                  (image)="post.image=$event"
+                  (imageAlt)="post.imageAlt=$event"
+                  (preview)="post.preview=$event"></app-posting>
+  </mat-expansion-panel>
+  <ng-template #display>
+    <app-posting [post]="post"
+      (title)="post.title=$event"
+      (image)="post.image=$event"
+      (imageAlt)="post.imageAlt=$event"
+      (preview)="post.preview=$event"></app-posting>
+  </ng-template>
+
+</div>
+<div [hidden]="post" class="align-center">
+  <mat-spinner></mat-spinner>
+</div>

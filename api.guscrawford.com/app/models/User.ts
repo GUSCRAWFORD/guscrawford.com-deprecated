@@ -8,22 +8,18 @@ export class User {
     @Edm.Key
     @Edm.Computed
     @Edm.String
-    _id: ObjectID;
+    _id?: ObjectID;
 
     @Edm.String
     username: string;
 
     roles: UserRoles[];
-    
-    @Edm.Function
-    @Edm.String
-    echo () {
-        return "yo"
-    }
-    
+    password?: string;
+
 }
 export const GUEST_USER = "guest";
 export enum UserRoles {
     Guest,
-    Member
+    Member,
+    Admin
 }

@@ -9,30 +9,30 @@ import {
 } from "odata-v4-server";
 import { createQuery } from "odata-v4-mongodb";
 import { User, UserRoles } from '../models/User';
-import { DbContext } from '../db/DbContext';
-import { MongoCrudController, ControllerContext } from '../common/MongoCrudController';
-const SALT = '?!@#@#@#';
+import { DbContext } from '../common/DbContext';
+import { AccessControl, ControllerContext } from './AccessControl';
+import { MongoCrudController } from '../common/MongoCrudController'
 @odata.type(User)
-export class UsersController extends MongoCrudController<User> {
-    static onBeforeAny(controllerContext:ControllerContext) {
+export class UsersController extends AccessControl<User> {
+    static onBeforeAny(controllerContext:ControllerContext<User>) {
         console.log('Users');
-        if (controllerContext.data.password) {
+        if (controllerContext.data && controllerContext.data.password) {
             (controllerContext as any).setPassword = controllerContext.data.password;
             console.log('Storing password %s',(controllerContext as any).setPassword);
             delete controllerContext.data.password;
         }
     }
 
-    static onBeforeUpsert(controllerContext:ControllerContext) {
-        UsersController.restrictTo(controllerContext, UserRoles.Member)
+    static onBeforeUpsert(controllerContext:ControllerContext<User>) {
+        UsersController.restrict(controllerContext).to.atLeast(UserRoles.Member)
     }
-    static onBeforeUpdate(controllerContext:ControllerContext) {
-        UsersController.restrictTo(controllerContext, UserRoles.Member)
+    static onBeforeUpdate(controllerContext:ControllerContext<User>) {
+        UsersController.restrict(controllerContext).to.atLeast(UserRoles.Member)
     }
-    static onBeforeInsert(controllerContext:ControllerContext) {
-        UsersController.restrictTo(controllerContext, UserRoles.Member)
+    static onBeforeInsert(controllerContext:ControllerContext<User>) {
+        UsersController.restrict(controllerContext).to.atLeast(UserRoles.Admin)
     }
-    static onAfterUpsert(ctx:ControllerContext) {
+    static onAfterUpsert(ctx:ControllerContext<User>) {
         let user = ctx.data;
         if ((ctx as any).setPassword) {
             console.log('Updating password...');
@@ -47,7 +47,7 @@ export class UsersController extends MongoCrudController<User> {
 
         }
     }
-    static onAfterInsert(ctx:ControllerContext) {
+    static onAfterInsert(ctx:ControllerContext<User>) {
         console.log('Adding password (%s) for %s :',(ctx as any).setPassword, ctx.data._id)
         let user = ctx.data;
         if ((ctx as any).setPassword) {
@@ -61,7 +61,7 @@ export class UsersController extends MongoCrudController<User> {
                 },err=>console.log('failed to hash (%s)',err))
         }
     } 
-    static onAfterAny(controllerContext:ControllerContext) {
+    static onAfterAny(controllerContext:ControllerContext<User>) {
         console.log(controllerContext.data)
     }
     async login( username:string, password: string){
@@ -82,18 +82,12 @@ export class UsersController extends MongoCrudController<User> {
                                 result.verified = verified;
                                 return verified;
                             });
-                    });
+                    }).catch(err=>console.log(err));
             });
         dbContext.client.close();
         return result.verified?result.user:null;
     }
     
-    static restrictTo(controllerContext: ControllerContext, role:UserRoles) {
-        if (!controllerContext.requestContext.request.user)
-            throw new HttpRequestError(403, 'Forbidden');
-        if (!controllerContext.requestContext.request.user.roles.find(r=>r===role))
-            throw new HttpRequestError(403, 'Forbidden');
-    }
 }
 import * as bcrypt from 'bcrypt';
 export class PasswordHash {

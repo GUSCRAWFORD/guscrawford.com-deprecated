@@ -10,7 +10,10 @@
 
     "update": "npm-run-all ui.update api.update",
     "ui.update": "cd ui.guscrawford.com && yarn install",
-    "api.update": "cd api.guscrawford.com && yarn install"
+    "api.update": "cd api.guscrawford.com && yarn install",
+
+    "build.ui":"cd ui.guscrawford.com && npm run build",
+    "build.api":"cd api.guscrawford.com && tsc"
   },
   "repository": {
     "type": "git",

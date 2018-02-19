@@ -24,7 +24,16 @@ import {
 @odata.controller(PostsController, true)
 @odata.controller(UsersController, true)
 export class GusCrawfordDotComApp extends ODataServer {
-    
+    @Edm.ActionImport
+    async initDb() {
+        let admin = await (new UsersController()).insert({
+                username:"admin",
+                password:"Admin!",
+                roles:[UserRoles.Admin]
+            }, {request:{user:{roles:[UserRoles.Admin]}}} as any);
+        console.log('Admin account generated...')
+        console.log(admin);
+    }
 }
 // NOTE: previously not using App as middleware for express
 //GusCrawfordDotComApp.create('/'+APP_CONFIG[ENV].prefix, APP_CONFIG[ENV].port);
@@ -44,7 +53,6 @@ app
 .use(express.json())
 .post(prefix+'/login', (req, res, next)=>{
     console.log('login');
-    console.log(new Error('yo'))
     let defaultGuestUser = {_id:"guest", roles:[UserRoles.Guest]};
     if (req.body.username && req.body.password)
         (new UsersController()).login(req.body.username,req.body.password)

@@ -1,0 +1,30 @@
+
+mat-expansion-panel {
+    background: none;
+}
+app-posting-actions {
+    color: rgba(0, 0, 0, 0.6)
+}
+img {
+    position:absolute;
+    top:0px;
+    left:0px;
+    z-index:1;
+    -webkit-mask-position: 0 0;
+-webkit-mask-size: 100% 100%;
+-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
+   color-stop(0.00,  rgba(0,0,0,1)),
+   color-stop(0.25,  rgba(0,0,0,0)));
+   width:100%;
+   height:auto;
+}
+.card-content {
+    position:relative;
+    z-index:3;
+    text-shadow: 0px 0px 9px white;
+}
+mat-card-title-group {
+    position:relative;
+    z-index:5;
+    text-shadow: 0px 0px 9px white;
+}

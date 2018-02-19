@@ -36,7 +36,7 @@ export class UiService {
     onDrawerMenuStateChange: Observable<AnimationBoxStates>
   };
   private _state = {
-    drawerMenu:AnimationBoxStates.Hidden
+    drawerMenu:AnimationBoxStates.Hidden as any
   };
   get drawerMenuState () {
     return this._state.drawerMenu;

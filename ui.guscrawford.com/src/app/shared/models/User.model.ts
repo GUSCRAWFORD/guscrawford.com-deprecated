@@ -6,5 +6,6 @@ export interface User {
 }
 export enum UserRoles {
     Guest,
-    Member
+    Member,
+    Admin
 }

@@ -1,6 +1,15 @@
+
 export interface Post {
     content: string;
     _id?: string;
+    created: OnAndBy;
+    modified: OnAndBy;
+}
+export class OnAndBy {
+    constructor (
+        public on: Date | number | string,
+        public by: string
+    ) {}
 }
 export interface PostView {
     

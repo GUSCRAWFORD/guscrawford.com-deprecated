@@ -6,7 +6,7 @@ import {
     odata
 } from "odata-v4-server";
 import { createQuery } from "odata-v4-mongodb";
-import { DbContext } from '../db/DbContext';
+import { DbContext } from './DbContext';
 export class Controller<T extends {_id:ObjectID}> extends ODataController {
     static createMongoQuery(query:ODataQuery) {
         return createQuery(query);
