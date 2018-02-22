@@ -55,7 +55,7 @@ export class ODataResource<TModel> {
                 .replace(/@api/g,API)
                 .replace(/@resource/g, this.name)
                 .replace(/@key/g, key.toString());
-    if (query) url += serialize(query);
+    if (query) url += '?'+serialize(query);
     return this.http
       .get(url, {
         withCredentials:true
@@ -66,7 +66,7 @@ export class ODataResource<TModel> {
     let url = "@api/@resource"
                 .replace(/@api/g,API)
                 .replace(/@resource/g, this.name);
-    if (query) url += serialize(query);
+    if (query) url += '?'+serialize(query);
     return this.http
       .get(url, {
         withCredentials:true

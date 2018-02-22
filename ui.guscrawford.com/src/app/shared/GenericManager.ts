@@ -9,8 +9,8 @@ export abstract class GenericManager<TModel> {
     ) { }
     protected resource = this.OData.resource<TModel>(this.resourceName);
 
-    list() : Observable<TModel[]> {
-      return this.resource.query();
+    list(query?) : Observable<TModel[]> {
+      return this.resource.query(query);
     }
     one(itemId:string) : Observable<TModel>{
       return this.resource.single(itemId);

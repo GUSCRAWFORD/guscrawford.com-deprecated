@@ -11,5 +11,5 @@ export class UiDrawerMenuComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  activeLink: string = "/post/feed";
 }

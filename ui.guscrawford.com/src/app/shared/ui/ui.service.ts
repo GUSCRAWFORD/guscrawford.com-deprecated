@@ -28,7 +28,7 @@ export class UiService {
   has = {
     atLeast:(role:UserRoles)=>{
       return this.user.flatMap(user=>{
-        if (user.roles && user.roles.length && user.roles.sort().reverse()[0] < role)
+        if (user && user.roles && user.roles.length && user.roles.sort().reverse()[0] < role)
           return Observable.of(false);
         return Observable.of(true);
       })
@@ -47,6 +47,7 @@ export class UiService {
   private _state = {
     drawerMenu:AnimationBoxStates.Hidden as any
   };
+  redirectAfterLogin: string;
   get drawerMenuState () {
     return this._state.drawerMenu;
   }

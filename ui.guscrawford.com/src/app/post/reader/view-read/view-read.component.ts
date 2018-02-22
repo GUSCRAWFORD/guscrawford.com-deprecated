@@ -43,18 +43,23 @@ export class ViewReadComponent implements OnInit {
         this.view.state[this.view.hot._id] = AnimationBox.States.Hidden;
         this.view.hot = null;
       }
+    },
+    query: {
+      $top:2,
+      $filter:"public eq true"
     }
   }
   id: string;
   posts: Post[];
   load() : Observable<Post[]> {
-    return this.route.params.map(p=>p.id)
-      .flatMap(id=>{
-        this.id=id;
+    return this.route.params
+      .flatMap(params=>{
+        this.id = params.id;
+        this.view.query.$filter = params.topic || this.view.query.$filter;
         return this.ui.user
       })
       .flatMap(user=>{
-        return this.postManager.list()
+        return this.postManager.list(this.view.query);
       })
       .flatMap(posts=>{
         return Observable.of(this.posts=posts)

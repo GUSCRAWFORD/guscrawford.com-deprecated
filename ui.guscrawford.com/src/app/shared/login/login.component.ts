@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   FormController,
   FormBuilder,
@@ -28,7 +29,8 @@ export class LoginComponent implements OnInit {
     private builder: FormBuilder,
     private PostManager: PostManager,
     private ui: UiService,
-    private userManager: UserManager
+    private userManager: UserManager,
+    private router: Router
   ) { }
   States = AnimationBox.States;
   formControl = new FormController(this.builder, 'postForm');
@@ -49,6 +51,8 @@ export class LoginComponent implements OnInit {
       })
       .subscribe(user=>{
         console.log(user);
+        this.router.navigateByUrl(this.ui.redirectAfterLogin||'/');
+        this.ui.redirectAfterLogin = '';
       })
   }
 }
