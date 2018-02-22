@@ -12,7 +12,8 @@ import {
   AnimationBox,
 
   Post, PostView,
-  PostManager
+  PostManager,
+  AnimationBoxStates
 } from '../../../shared';
 import '../../reader/view-posting/view-posting.component';
 @Component({
@@ -46,7 +47,8 @@ export class EditPostComponent implements OnInit {
       [this.post._id?'update':'create'](this.post)
       .subscribe(post=>{
         if (!this.post._id) this.post._id = post._id;
-        this.togglePreview();
+        if (this.states.preview === AnimationBoxStates.Hidden)
+          this.togglePreview();
         this.view.loading = false;
       }, err=>err, ()=>{})
   }
@@ -57,6 +59,6 @@ export class EditPostComponent implements OnInit {
   }
   states = {
     preview:AnimationBox.States.Hidden,
-    edit:AnimationBox.States.Showing
+    edit:AnimationBox.States.Showing,
   }
 }

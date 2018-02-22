@@ -1,11 +1,15 @@
-<ul>
-  <li>
-    <h2><a href="/post/feed">Posts</a></h2>
-  </li>
-  <li>
-    <h2><a href="/post/new">New Post</a></h2>
-  </li>
-  <li>
-    <h2><a href="/login">Login</a></h2>
-  </li>
-</ul>
+
+<mat-nav-list>
+  <a mat-list-item href="/post/feed">
+    <button mat-icon-button type="button">
+      <i class="material-icons">home</i>
+    </button>
+    Home
+  </a>
+  <a mat-list-item href="/post/new">
+    <button mat-icon-button type="button">
+      <i class="material-icons">create</i>
+    </button>
+    New Post
+  </a>
+</mat-nav-list>

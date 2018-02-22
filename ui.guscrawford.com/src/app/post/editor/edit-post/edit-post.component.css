@@ -2,3 +2,13 @@ textarea {
     min-height: 200px;
     max-height: 475px;
 }
+.valign-middle {
+    vertical-align: middle;
+}
+.disabled {
+    color:rgba(0,0,0,.26);
+}
+mat-slide-toggle {
+    padding-top:6px;
+    padding-right:15px;
+}

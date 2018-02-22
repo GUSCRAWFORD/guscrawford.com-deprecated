@@ -1,7 +1,7 @@
 
 
 <mat-drawer-container class="drawer-container" autosize>
-  <mat-drawer #drawer class="drawer-container-drawer-sidenav" mode="over">
+  <mat-drawer #drawer class="drawer-container-drawer-sidenav" mode="push">
     <app-ui-drawer-menu></app-ui-drawer-menu>
   </mat-drawer>
 
@@ -10,7 +10,7 @@
       <app-ui-toolbar></app-ui-toolbar>
     </mat-toolbar>
     <div class="drawer-container-sidenav-content-view-wrapper">
-      <mat-toolbar class="toolbar-space"></mat-toolbar>
+      <!-- <mat-toolbar class="toolbar-space"></mat-toolbar> -->
       <router-outlet></router-outlet>
     </div>
   </div>

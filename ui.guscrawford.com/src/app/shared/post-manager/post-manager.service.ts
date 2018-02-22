@@ -14,8 +14,9 @@ export class PostManager extends GenericManager<Post> {
   getCleanModel(): Post {
     return {
       content:null,
-      created: new OnAndBy(0, ''),
-      modified: new OnAndBy(0, '')
+      created: new OnAndBy(new Date().valueOf(), ''),
+      modified: new OnAndBy(new Date().valueOf(), ''),
+      public:false
     }
   }
   

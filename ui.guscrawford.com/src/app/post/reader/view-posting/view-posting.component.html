@@ -13,6 +13,7 @@
   [alt]="post.imageAlt"
   [title]="post.imageAlt"
   [src]="post.image||''">
+
 <div class="card-content" *ngIf="post">
       <app-markdown-preview
         [hidden]="post.readMore || !collapsible"

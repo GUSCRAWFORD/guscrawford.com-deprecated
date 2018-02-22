@@ -23,4 +23,7 @@ export class Post {
     
     @Edm.ComplexType(OnAndBy)
     modified: OnAndBy;
+
+    @Edm.Boolean
+    public: boolean;
 }

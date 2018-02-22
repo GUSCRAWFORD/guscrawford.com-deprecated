@@ -25,6 +25,15 @@ export class UiService {
       this._observers.onDrawerMenuStateChange = observer;
     });
   }
+  has = {
+    atLeast:(role:UserRoles)=>{
+      return this.user.flatMap(user=>{
+        if (user.roles && user.roles.length && user.roles.sort().reverse()[0] < role)
+          return Observable.of(false);
+        return Observable.of(true);
+      })
+    }
+  }
   private _user = {
     loggingIn:null,
     loggedIn:null

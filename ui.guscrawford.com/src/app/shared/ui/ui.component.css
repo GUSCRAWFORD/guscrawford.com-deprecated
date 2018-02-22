@@ -5,10 +5,10 @@
 .drawer-container-sidenav-content-view-wrapper{
     margin:12px;
 }
-.drawer-container-drawer-sidenav {
+/* .drawer-container-drawer-sidenav {
     padding-right:14px;
-}
-mat-toolbar.toolbar {
+} */
+/* mat-toolbar.toolbar {
     position:fixed;
     z-index:10000;
     top:0px;
@@ -16,4 +16,4 @@ mat-toolbar.toolbar {
 }
 mat-toolbar.toolbar-space {
     visibility: hidden;
-}
+} */

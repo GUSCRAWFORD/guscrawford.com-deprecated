@@ -25,7 +25,9 @@ import {
   MatTabsModule,
   MatSidenavModule,
   MatToolbarModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatSlideToggleModule,
+  MatListModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -38,6 +40,9 @@ import { LoginComponent } from './login/login.component';
 import { UiToolbarComponent } from './ui/ui-toolbar/ui-toolbar.component';
 import { UiDrawerMenuComponent } from './ui/ui-drawer-menu/ui-drawer-menu.component';
 import { UiDrawerPageWrapComponent } from './ui/ui-drawer-page-wrap/ui-drawer-page-wrap.component';
+
+import { AuthGuardService } from '../shared/login/auth-guard.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -54,6 +59,8 @@ import { UiDrawerPageWrapComponent } from './ui/ui-drawer-page-wrap/ui-drawer-pa
     MatSidenavModule,
     MatToolbarModule,
     MatExpansionModule,
+    MatSlideToggleModule,
+    MatListModule,
     FormsModule,
     ReactiveFormsModule
   ],
@@ -70,7 +77,8 @@ import { UiDrawerPageWrapComponent } from './ui/ui-drawer-page-wrap/ui-drawer-pa
     UiService,
     PostManager,
     UserManager,
-    MarkdownService
+    MarkdownService,
+    AuthGuardService
   ],
   exports:[
     MatIconModule,
@@ -84,6 +92,8 @@ import { UiDrawerPageWrapComponent } from './ui/ui-drawer-page-wrap/ui-drawer-pa
     MatSidenavModule,
     MatToolbarModule,
     MatExpansionModule,
+    MatSlideToggleModule,
+    MatListModule,
     MarkdownPreviewComponent,
     ReactiveFormsModule,
     LoginComponent,

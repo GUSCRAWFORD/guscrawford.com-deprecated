@@ -1,24 +1,26 @@
-<form [formGroup]="formControl.group"
-      (ngSubmit)="login()"
-      class="form-snapping">
+<mat-card>
+  <form [formGroup]="formControl.group"
+        (ngSubmit)="login()"
+        class="form-snapping">
 
 
-  <div>
-    <mat-form-field class="snap-full">
-      <input  matInput type="text"
-              placeholder="Email" formControlName="username"
-              [(ngModel)]="user.username">
-    </mat-form-field>
-  </div> 
-  <div>
-    <mat-form-field class="snap-full">
-      <input  matInput type="password"
-              placeholder="Password" formControlName="password"
-              [(ngModel)]="user.password">
-    </mat-form-field>
-  </div>
-  <button mat-button class="snap-full"
-          type="submit">LOGIN
-  </button>
+    <div>
+      <mat-form-field class="snap-full">
+        <input  matInput type="text"
+                placeholder="Email" formControlName="username"
+                [(ngModel)]="user.username">
+      </mat-form-field>
+    </div> 
+    <div>
+      <mat-form-field class="snap-full">
+        <input  matInput type="password"
+                placeholder="Password" formControlName="password"
+                [(ngModel)]="user.password">
+      </mat-form-field>
+    </div>
+    <button mat-button class="snap-full"
+            type="submit">LOGIN
+    </button>
 
-</form>
+  </form>
+</mat-card>

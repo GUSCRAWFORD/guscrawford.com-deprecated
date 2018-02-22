@@ -15,9 +15,23 @@
   <button mat-button [disabled]="!formControl.group.valid"
     class="float-right"
     type="submit"><b>SAVE</b></button>
-  <button mat-icon-button type="button" [disabled]="!formControl.group.valid"
-    (click)="togglePreview()">
-    <i class="material-icons">remove_red_eye</i>
-  </button>
-  
+  <mat-slide-toggle (change)="post.public = !post.public;" [checked]="post&&post.public" class="float-right valign-middle">
+    <i class="material-icons valign-middle" [ngClass]="{'disabled':post&&!post.public}">public</i>
+    <span class="valign-middle" [ngClass]="{'disabled':post&&!post.public}">{{(post && post.public)?'Public':'Private'}}</span>
+  </mat-slide-toggle>
+  <span [hidden]="states.edit !== States.Showing || !post || view.loading">
+    <button mat-icon-button type="button" [disabled]="!formControl.group.valid"
+      (click)="togglePreview()">
+      <i class="material-icons"
+        [@fadeInOut]="states.edit">remove_red_eye</i>
+    </button>
+  </span>
+  <span [hidden]="states.preview !== States.Showing || !post || view.loading">
+    <button mat-icon-button type="button" [disabled]="!formControl.group.valid"
+      (click)="togglePreview()">
+      <i class="material-icons"
+        [@fadeInOut]="states.preview">mode_edit</i>
+    </button>
+  </span>
+
 </form>

@@ -4,6 +4,8 @@ export interface Post {
     _id?: string;
     created: OnAndBy;
     modified: OnAndBy;
+
+    public:boolean;
 }
 export class OnAndBy {
     constructor (
