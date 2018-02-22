@@ -18,7 +18,7 @@ import { UiComponent } from './shared/ui/ui.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule,
+    SharedModule.forRoot(),
     routing
   ],
   providers: [],

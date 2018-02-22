@@ -14,7 +14,7 @@ export class AuthGuardService implements CanActivate {
         .flatMap(privs=>{
             if (!privs) {
                 this.ui.redirectAfterLogin = state.url;
-                this.router.navigateByUrl('/login');
+                this.router.navigate(['/login']);
             }
             return Observable.of(privs);
         });

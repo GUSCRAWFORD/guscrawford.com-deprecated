@@ -19,7 +19,7 @@ import { ViewPostComponent } from './editor/view-post/view-post.component';
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule,
+    SharedModule.forRoot(),
     routing
   ],
   declarations: [

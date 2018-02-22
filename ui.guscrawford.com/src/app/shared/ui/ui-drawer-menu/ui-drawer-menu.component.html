@@ -1,17 +1,24 @@
 
 <mat-nav-list>
-  <a mat-list-item href="/post/feed" (click)="activeLink='/post/feed'"
+  <a mat-list-item [routerLink]="['/post','feed']" (click)="ui.drawerMenuState = false"
     [ngClass]="{'mat-list-item-focused':activeLink==='/post/feed'}">
     <button mat-icon-button type="button">
       <i class="material-icons">home</i>
     </button>
     Home
   </a>
-  <a mat-list-item href="/post/new" (click)="activeLink='/post/new'"
+  <a mat-list-item [routerLink]="['/post','new']" (click)="ui.drawerMenuState = false"
     [ngClass]="{'mat-list-item-focused':activeLink==='/post/new'}">
     <button mat-icon-button type="button">
       <i class="material-icons">create</i>
     </button>
     New Post
   </a>
+  <!-- <a mat-list-item (click)="ui.drawerMenuState = false"
+    [ngClass]="{'mat-list-item-focused':activeLink==='/logout'}">
+    <button mat-icon-button type="button">
+      <i class="material-icons">exit_to_app</i>
+    </button>
+    Logout
+  </a> -->
 </mat-nav-list>

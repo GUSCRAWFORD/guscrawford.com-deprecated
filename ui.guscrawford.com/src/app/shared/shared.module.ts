@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 
@@ -100,4 +100,17 @@ import { AuthGuardService } from '../shared/login/auth-guard.service';
     UiComponent
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule,
+      providers: [
+        ODataService,
+        UiService,
+        PostManager,
+        UserManager,
+        MarkdownService,
+        AuthGuardService]
+    };
+  }
+}
