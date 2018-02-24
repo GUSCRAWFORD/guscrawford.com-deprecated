@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewReadComponent } from './view-read.component';
+import { ViewFeedComponent } from './view-feed.component';
 
-describe('ViewReadComponent', () => {
-  let component: ViewReadComponent;
-  let fixture: ComponentFixture<ViewReadComponent>;
+describe('ViewFeedComponent', () => {
+  let component: ViewFeedComponent;
+  let fixture: ComponentFixture<ViewFeedComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewReadComponent ]
+      declarations: [ ViewFeedComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ViewReadComponent);
+    fixture = TestBed.createComponent(ViewFeedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

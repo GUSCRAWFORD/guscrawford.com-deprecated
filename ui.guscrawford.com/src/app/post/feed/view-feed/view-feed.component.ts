@@ -13,11 +13,11 @@ import {
 } from '../../../shared';
 @Component({
   selector: 'app-view-read',
-  templateUrl: './view-read.component.html',
-  styleUrls: ['./view-read.component.css'],
+  templateUrl: './view-feed.component.html',
+  styleUrls: ['./view-feed.component.css'],
   animations: AnimationBox.fadeInOut
 })
-export class ViewReadComponent implements OnInit {
+export class ViewFeedComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,

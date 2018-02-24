@@ -15,7 +15,7 @@ import {
   PostManager,
   AnimationBoxStates
 } from '../../../shared';
-import '../../reader/view-posting/view-posting.component';
+import '../../feed/view-posting/view-posting.component';
 @Component({
   selector: 'app-edit-post',
   templateUrl: './edit-post.component.html',
