@@ -1,11 +1,16 @@
 import { Component,
   OnInit, DoCheck,
   Input,
-  Output, EventEmitter } from '@angular/core';
+  Output, EventEmitter,
+  ViewChild, ElementRef
+} from '@angular/core';
 import {
   Post, PostView
 } from '../../../shared';
-export const MAX_PREVIEW_LINES = 5, MAX_PREVIEW_CHARS = 160;
+import {
+ MarkdownPreviewComponent
+} from '../../../shared/markdown/markdown-preview.component'
+export const MAX_PREVIEW_LINES = 5, MAX_PREVIEW_CHARS = 160, ALT_HASH_CONTROL_CHAR="#";
 @Component({
   selector: 'app-posting',
   templateUrl: './posting.component.html',
@@ -13,13 +18,15 @@ export const MAX_PREVIEW_LINES = 5, MAX_PREVIEW_CHARS = 160;
 })
 export class PostingComponent implements OnInit, DoCheck {
 
-  constructor() { }
+  constructor(private element: ElementRef) { }
 
   private model :{
     post: Post&PostView;
   } = {
     post: null
   }
+  @ViewChild(MarkdownPreviewComponent)
+  markdownPreview: MarkdownPreviewComponent;
 
   @Output('title')
   onTitleChange = new EventEmitter<string>();
@@ -65,5 +72,24 @@ export class PostingComponent implements OnInit, DoCheck {
   }
   ngDoCheck() {
     this.post = this.post;
+    this.markdownPreview;
+    this.imageAltHashTagControl(this.element.nativeElement.children[0].children);
+  }
+  imageAltHashTagControl(domCollection) {
+    if (domCollection)
+      for (var node in domCollection) {
+        if (domCollection[node].nodeName === 'IMG') {
+          let altDirective = domCollection[node].attributes.alt.value?domCollection[node].attributes.alt.value.split(ALT_HASH_CONTROL_CHAR):'';
+          switch (altDirective[1]) {
+            case 'hide-in-post':
+              domCollection[node].style.visibility = 'hidden';
+              domCollection[node].style.display = 'none';
+              domCollection[node].attributes.alt.value = altDirective[0]
+              break;
+            default:
+          }
+        }
+        else if (domCollection[node].children) this.imageAltHashTagControl(domCollection[node].children);
+      }
   }
 }

@@ -10,7 +10,6 @@
 <img *ngIf="post"
   [hidden]="!post.imageLoad"
   (load)="post.imageLoad=true"
-  [alt]="post.imageAlt"
   [title]="post.imageAlt"
   [src]="post.image||''">
 

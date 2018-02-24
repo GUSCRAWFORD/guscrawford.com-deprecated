@@ -29,7 +29,7 @@
 .no-padding {
     padding:0px;
 }
-.hide-title h1 {
+.hide-title h1:first-of-type {
     visibility: hidden;
     display: none;
 }
