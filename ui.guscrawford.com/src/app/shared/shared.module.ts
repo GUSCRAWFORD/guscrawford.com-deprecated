@@ -72,14 +72,14 @@ import { AuthGuardService } from '../shared/login/auth-guard.service';
     UiDrawerMenuComponent,
     UiDrawerPageWrapComponent
   ],
-  providers: [
-    ODataService,
-    UiService,
-    PostManager,
-    UserManager,
-    MarkdownService,
-    AuthGuardService
-  ],
+  // providers: [
+  //   ODataService,
+  //   UiService,
+  //   PostManager,
+  //   UserManager,
+  //   MarkdownService,
+  //   AuthGuardService
+  // ],
   exports:[
     MatIconModule,
     MatProgressSpinnerModule,

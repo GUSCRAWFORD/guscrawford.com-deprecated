@@ -24,8 +24,7 @@ import { UiComponent } from './shared/ui/ui.component';
   providers: [],
   bootstrap: [UiComponent],
   exports:[
-    ReactiveFormsModule,
-    SharedModule
+    ReactiveFormsModule
   ]
 })
 export class AppModule { }
