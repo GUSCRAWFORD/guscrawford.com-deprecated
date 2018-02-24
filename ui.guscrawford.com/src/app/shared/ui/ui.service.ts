@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { AnimationBoxStates } from './AnimationBox';
 import {
@@ -14,17 +14,7 @@ export class UiService {
 
   constructor(
     private userManager:UserManager
-  ) {
-    this._observers = {
-      onDrawerMenuStateChange: null
-    };
-    this._observables = {
-      onDrawerMenuStateChange: null
-    };
-    this._observables.onDrawerMenuStateChange = new Observable((observer)=>{
-      this._observers.onDrawerMenuStateChange = observer;
-    });
-  }
+  ) {  }
   has = {
     atLeast:(role:UserRoles)=>{
       return this.user.flatMap(user=>{
@@ -38,12 +28,7 @@ export class UiService {
     loggingIn:null,
     loggedIn:null
   };
-  private _observers : {
-    onDrawerMenuStateChange: Observer<AnimationBoxStates>
-  };
-  private _observables : {
-    onDrawerMenuStateChange: Observable<AnimationBoxStates>
-  };
+
   private _state = {
     drawerMenu:AnimationBoxStates.Hidden as any
   };
@@ -52,12 +37,13 @@ export class UiService {
     return this._state.drawerMenu;
   }
   set drawerMenuState(val) {
-    this._observers.onDrawerMenuStateChange.next(val?AnimationBoxStates.Showing:AnimationBoxStates.Hidden);
+    this._onDrawerMenuStateChange.emit(val);
     this._state.drawerMenu = val?AnimationBoxStates.Showing:AnimationBoxStates.Hidden;
   }
   get onDrawerMenuStateChange () {
-    return this._observables.onDrawerMenuStateChange;
+    return this._onDrawerMenuStateChange;
   }
+  _onDrawerMenuStateChange = new EventEmitter<boolean>();
   get user() : Observable<User> {
     if (this._user.loggedIn) return Observable.of(this._user.loggedIn);
     if (this._user.loggingIn) return this._user.loggingIn;

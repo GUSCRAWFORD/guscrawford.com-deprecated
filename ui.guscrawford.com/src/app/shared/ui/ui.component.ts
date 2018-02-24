@@ -19,7 +19,7 @@ export class UiComponent implements OnInit {
       change=>{
         this.drawer.toggle()
       }
-    )
+    );
   }
 
 }
