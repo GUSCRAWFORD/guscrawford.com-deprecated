@@ -1,8 +1,12 @@
 {
   "name": "api.guscrawford.com",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "api for guscrawfor.com",
   "main": "bin/GusCrawfordDotComApp.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GUSCRAWFORD/guscrawford.com.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "api.develop": "npm-run-all --parallel mongod.local.guscrawford.com tsc.watch api.watch",
