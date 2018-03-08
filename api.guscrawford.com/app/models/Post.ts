@@ -26,4 +26,10 @@ export class Post {
 
     @Edm.Boolean
     public: boolean;
+
+    @Edm.String
+    previousPostId: string;
+
+    @Edm.EntityType(Edm.ForwardRef(()=>Post))
+    previousPost:Post;
 }
