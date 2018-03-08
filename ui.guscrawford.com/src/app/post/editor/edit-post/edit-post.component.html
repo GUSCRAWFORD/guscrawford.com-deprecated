@@ -6,7 +6,7 @@
   </div>
   <div [hidden]="states.edit !== States.Showing || !post || view.loading" [@fadeInOut]="states.edit">
     <mat-form-field class="snap-full">
-      <textarea matInput placeholder="Textarea" [(ngModel)]="post && post.content" formControlName="content"></textarea>
+      <textarea matInput placeholder="Post" [(ngModel)]="post && post.content" formControlName="content"></textarea>
     </mat-form-field>
   </div>
   <div [hidden]="states.preview !== States.Showing || view.loading" [@fadeInOut]="states.preview">

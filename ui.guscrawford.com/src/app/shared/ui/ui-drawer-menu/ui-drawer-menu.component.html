@@ -1,14 +1,16 @@
 
 <mat-nav-list>
-  <a mat-list-item *ngFor="let item of view.menu; index as i"
-    (click)="item.closeDrawer?ui.drawerMenuState = false:null;"
-    [routerLink]="item.routerLink"
-    [ngClass]="{
-      'mat-list-item-focus':itemIsActive(i)
-    }">
-    <button mat-icon-button type="button">
-      <i class="material-icons">{{item['material-icon']}}</i>
-    </button>
-    {{item.label}}
-  </a>
+  <div *ngFor="let item of view.menu; index as i" [hidden]="itemIsVisible(i)">
+    <a mat-list-item
+      (click)="item.closeDrawer?ui.drawerMenuState = false:null;"
+      [routerLink]="item.routerLink"
+      [ngClass]="{
+        'mat-list-item-focus':itemIsActive(i)
+      }">
+        <button mat-icon-button type="button">
+          <i class="material-icons">{{item['material-icon']}}</i>
+        </button>
+        {{item.label}}
+    </a>
+  </div>
 </mat-nav-list>

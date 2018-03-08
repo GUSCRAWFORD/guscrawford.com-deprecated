@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MatListItem } from '@angular/material/list';
 
 import { UserManager } from '../../user-manager';
+import { UserRoles } from '../../models';
 import { UiService } from '../ui.service';
 
 class MenuItem {
@@ -10,6 +11,8 @@ class MenuItem {
   'material-icon': string
   routerLink: string[];
   closeDrawer?: boolean;
+  roles?: any;
+  hidden?: boolean;
 }
 @Component({
   selector: 'app-ui-drawer-menu',
@@ -37,7 +40,28 @@ export class UiDrawerMenuComponent implements OnInit {
       this.listItemComponents._results[index]._element.nativeElement.classList.remove('mat-list-item-focus');
     return isActive;
   }
+  itemIsVisible(index:number) {
+    if (typeof this.view.menu[index].hidden !== 'undefined')
+      return this.view.menu[index].hidden;
 
+    if (this.view.menu[index].roles) {
+      var roleCheck = false, conditions = Object.keys(this.view.menu[index].roles);
+      conditions.forEach((cond, i)=>{
+        this.ui.has[cond](this.view.menu[index][cond]).subscribe(pass=>{
+          roleCheck = roleCheck || pass;
+          if (conditions.length === (i+1)){
+            console.log(roleCheck+' || '+pass);
+            this.view.menu[index].hidden = roleCheck;
+            if (!roleCheck) console.info('Showing '+this.view.menu[index].label)
+          }
+        });
+      });
+      return this.view.menu[index].hidden = true;
+    }
+
+    console.info('Showing (by default)'+this.view.menu[index].label)
+    return this.view.menu[index].hidden = false;
+  }
   view : { menu: MenuItem[] } = {
     menu: [
       {
@@ -50,6 +74,9 @@ export class UiDrawerMenuComponent implements OnInit {
         label:'New Post',
         'material-icon':'create',
         routerLink:['/post','new'],
+        roles:{
+          atLeast:UserRoles.Member
+        },
         closeDrawer:true
       }
     ]
