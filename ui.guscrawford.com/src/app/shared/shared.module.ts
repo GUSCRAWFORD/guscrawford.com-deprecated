@@ -27,7 +27,9 @@ import {
   MatToolbarModule,
   MatExpansionModule,
   MatSlideToggleModule,
-  MatListModule
+  MatListModule,
+  MatOption,
+  MatSelectModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -61,6 +63,7 @@ import { AuthGuardService } from '../shared/login/auth-guard.service';
     MatExpansionModule,
     MatSlideToggleModule,
     MatListModule,
+    MatSelectModule,
     FormsModule,
     ReactiveFormsModule
   ],
@@ -94,6 +97,7 @@ import { AuthGuardService } from '../shared/login/auth-guard.service';
     MatExpansionModule,
     MatSlideToggleModule,
     MatListModule,
+    MatSelectModule,
     MarkdownPreviewComponent,
     ReactiveFormsModule,
     LoginComponent,

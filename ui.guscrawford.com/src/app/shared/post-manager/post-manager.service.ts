@@ -10,16 +10,21 @@ export class PostManager extends GenericManager<Post> {
     OData:ODataService
   ) {
     super ('Posts', OData);
+    this.resource.registerItemAction('GET','nextPost',)
   }
+
   getCleanModel(): Post {
     return {
       content:null,
       created: new OnAndBy(new Date().valueOf(), ''),
       modified: new OnAndBy(new Date().valueOf(), ''),
-      public:false
+      public:false,
+      previousPostId:''
     }
   }
-  
+  previous() {
+
+  }
 }
 
 export enum PostingActions {

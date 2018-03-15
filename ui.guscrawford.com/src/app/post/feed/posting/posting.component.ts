@@ -53,8 +53,8 @@ export class PostingComponent implements OnInit, DoCheck {
           imageAlt = images && images[0] && images[0].match(/!\[.*\]/),
           image = images && images[0] && images[0].match(/\(.*\)/);
 
-      if (titles && titles.length) this.onTitleChange.emit(titles[0].substring(1).trim());
-      else this.onTitleChange.emit('');
+      if (titles && titles.length) this.onTitleChange.emit(this.model.post.title = titles[0].substring(1).trim());
+      else this.onTitleChange.emit(this.model.post.title = '');
 
       if (image && image.length) this.onImageChange.emit(image[0].substr(1,image[0].length-2));
       else this.onImageChange.emit('');

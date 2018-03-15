@@ -7,9 +7,9 @@ export const API = environment.apiPath || 'api';
 export class ODataService {
 
   constructor(private http:Http) { }
-  resource<TModel>(name:string) :ODataResource<TModel> {
+  resource<TModel>(name:string, model$odata:any=null) :ODataResource<TModel> {
     if (this.resourceCache[name] instanceof ODataResource) return this.resourceCache[name];
-    return new ODataResource<TModel>(name, this.http);
+    return new ODataResource<TModel>(name, this.http, model$odata);
   }
   private resourceCache = {};
 
@@ -26,7 +26,22 @@ export class ODataApiMetadata {
     "url":  string;
 }
 export class ODataResource<TModel> {
-  constructor(public name:string, private http: Http) {
+  constructor(public name:string, private http: Http, protected model$odata=null) {
+    if (!model$odata) this.model$odata = {};
+  }
+  registerItemAction(method:string, action:string) {
+    this.model$odata[action] = (key:((d:TModel)=>any)|any='_id', query?:any, data?:TModel)=>{
+      let keyId = data?data[typeof key === 'function'?key(data):key]:typeof key==='function'?key(query):key,
+          url = "@api/@resource('@key')/@action"
+                  .replace(/@api/g,API)
+                  .replace(/@resource/g, this.name)
+                  .replace(/@action/g,action)
+                  .replace(/@key/g, keyId.toString());
+      return this.http[method.toLowerCase()](url, data, {
+          withCredentials:true
+        })
+        .map(rs=>rs.json());
+    }
   }
   create(data:TModel) {
     let url = "@api/@resource"
@@ -71,7 +86,12 @@ export class ODataResource<TModel> {
       .get(url, {
         withCredentials:true
       })
-      .map(rs=>rs.json().value).take(1);
+      .map(rs=>rs.json().value)
+      .map(rs=>{
+        rs.$odata=this.model$odata;
+        return rs;
+      })
+      .take(1);
   }
   remove(key:any) {
     let url = "@api/@resource('@key')"

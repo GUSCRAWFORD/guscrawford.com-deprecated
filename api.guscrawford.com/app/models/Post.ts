@@ -18,6 +18,10 @@ export class Post {
 
     @Edm.String
     content: string;
+
+    @Edm.String
+    title: string;
+
     @Edm.ComplexType(OnAndBy)
     created: OnAndBy;
     
@@ -32,4 +36,7 @@ export class Post {
 
     @Edm.EntityType(Edm.ForwardRef(()=>Post))
     previousPost:Post;
+
+    @Edm.EntityType(Edm.ForwardRef(()=>Post))
+    nextPost:Post;
 }
