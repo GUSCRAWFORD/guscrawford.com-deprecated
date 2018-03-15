@@ -30,14 +30,23 @@ export class PostsController extends AccessControl<Post> {
             return result.modifiedCount;
         });
     }
+    @odata.GET("nextPost")
+    async getNextPost(@odata.result result: Post, @odata.query query: ODataQuery): Promise<Post> {
+        const
+            dbContext = await new DbContext().connect(),
+            mongodbQuery = createQuery(query);
+        return dbContext.db.collection(PostsController.defaultName(this)).findOne({ previousPostId: result._id.toHexString() }, {
+            fields: mongodbQuery.projection
+        });
+    }
     @odata.GET("previousPost")
     async getPreviousPost(@odata.result result: Post, @odata.query query: ODataQuery): Promise<Post> {
         const
             dbContext = await new DbContext().connect(),
             mongodbQuery = createQuery(query);
-        let catId;
-        try{ catId = new ObjectID(result.previousPostId); }catch(err){ catId = result.previousPostId; }
-        return dbContext.db.collection(PostsController.defaultName(this)).findOne({ _id: catId }, {
+        let prevId;
+        try{ prevId = new ObjectID(result.previousPostId); }catch(err){ prevId = result.previousPostId; }
+        return dbContext.db.collection(PostsController.defaultName(this)).findOne({ _id: prevId }, {
             fields: mongodbQuery.projection
         });
     }
