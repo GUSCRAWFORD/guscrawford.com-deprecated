@@ -1,7 +1,6 @@
-
-export interface Post {
+import { Any } from './Any.model';
+export interface Post extends Any {
     content: string;
-    _id?: string;
     created: OnAndBy;
     modified: OnAndBy;
     title?:string;

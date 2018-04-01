@@ -28,6 +28,7 @@ export class ViewPostingComponent implements OnInit, AfterViewChecked {
   @Input()
   collapsible: boolean = true;
   ngOnInit() {
+    this.post.$.nextPost(this.post._id).subscribe();
   }
   ngAfterViewChecked() {
     this.cd.detectChanges();

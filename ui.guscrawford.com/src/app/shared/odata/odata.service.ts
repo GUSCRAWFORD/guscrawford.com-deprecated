@@ -75,7 +75,11 @@ export class ODataResource<TModel> {
       .get(url, {
         withCredentials:true
       })
-      .map(rs=>rs.json()).take(1);
+      .map(rs=>rs.json()).take(1)
+      .map(item=>{
+        item.$ = this.model$odata;
+        return item;
+      });
   }
   query(query?:any): Observable<TModel[]> {
     let url = "@api/@resource"
@@ -88,7 +92,7 @@ export class ODataResource<TModel> {
       })
       .map(rs=>rs.json().value)
       .map(rs=>{
-        rs.$odata=this.model$odata;
+        rs.forEach(r=>r.$=this.model$odata);
         return rs;
       })
       .take(1);

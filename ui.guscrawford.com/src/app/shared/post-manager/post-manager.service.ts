@@ -10,7 +10,8 @@ export class PostManager extends GenericManager<Post> {
     OData:ODataService
   ) {
     super ('Posts', OData);
-    this.resource.registerItemAction('GET','nextPost',)
+    this.resource.registerItemAction('GET','nextPost');
+    this.resource.registerItemAction('GET', 'previousPost');
   }
 
   getCleanModel(): Post {
@@ -21,9 +22,6 @@ export class PostManager extends GenericManager<Post> {
       public:false,
       previousPostId:''
     }
-  }
-  previous() {
-
   }
 }
 
