@@ -39,7 +39,9 @@
       (imageAlt)="post.imageAlt=$event"
       (preview)="post.preview=$event"></app-posting>
   </ng-template>
-
+  <button mat-button [disabled]="!nextPost" class="float-right" type="submit">
+    <b>NEXT</b>
+  </button>
 </div>
 <div [hidden]="post" class="align-center">
   <mat-spinner></mat-spinner>

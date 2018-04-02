@@ -25,10 +25,12 @@ export class ViewPostingComponent implements OnInit, AfterViewChecked {
   expPanel: MatExpansionPanel;
   @Input()
   post: Post&PostView;
+  nextPost: Post;
   @Input()
   collapsible: boolean = true;
   ngOnInit() {
-    this.post.$.nextPost(this.post._id).subscribe();
+    this.post.$.nextPost(this.post._id, {$select:"_id,title"})
+      .subscribe(nextPost=>this.nextPost=nextPost);
   }
   ngAfterViewChecked() {
     this.cd.detectChanges();

@@ -14,7 +14,8 @@ import { ViewPostingComponent } from './feed/view-posting/view-posting.component
 
 import { ViewEditComponent } from './editor/view-edit/view-edit.component';
 import { EditPostComponent } from './editor/edit-post/edit-post.component';
-import { ViewPostComponent } from './editor/view-post/view-post.component';
+
+import { ViewPostComponent } from './post/view-post/view-post.component';
 
 @NgModule({
   imports: [
