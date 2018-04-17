@@ -46,7 +46,7 @@ export class ViewFeedComponent implements OnInit {
     },
     query: {
       $top:2,
-      $filter:"public eq true and (previousPostId eq '')"
+      $filter:"public eq true and (previousPostId eq null or previousPostId eq '')"
     }
   }
   id: string;

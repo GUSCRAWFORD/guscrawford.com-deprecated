@@ -48,7 +48,7 @@ export class ODataResource<TModel> {
                 .replace(/@api/g,API)
                 .replace(/@resource/g, this.name);
     return this.http
-      .post(url, data, {
+      .post(url, filterStoredData(data), {
         withCredentials:true
       })
       .map(rs=>rs.json());
@@ -60,7 +60,7 @@ export class ODataResource<TModel> {
                 .replace(/@resource/g, this.name)
                 .replace(/@key/g, keyId.toString());
     return this.http
-      .put(url, data, {
+      .put(url, filterStoredData(data), {
         withCredentials:true
       })
       .map(rs=>rs.json());
@@ -76,9 +76,10 @@ export class ODataResource<TModel> {
         withCredentials:true
       })
       .map(rs=>rs.json()).take(1)
-      .map(item=>{
-        item.$ = this.model$odata;
-        return item;
+      .map(rs=>{
+        rs.$ = this.model$odata;
+        //rs.forEach(r=>r.$ = this.model$odata);
+        return rs;
       });
   }
   query(query?:any): Observable<TModel[]> {
@@ -121,4 +122,9 @@ function serialize (obj, prefix?) {
     }
   }
   return str.join("&");
+}
+function filterStoredData<TModel>(data:TModel) {
+  var clone = JSON.parse(JSON.stringify(data));
+  if (clone.$) delete clone.$;
+  return clone;
 }

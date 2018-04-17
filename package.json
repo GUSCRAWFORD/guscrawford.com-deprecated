@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"cd ui.guscrawford.com && npm i && npm run build && cd ../api.crawford.com && npm i && tsc",
-
+    "start": "cd ui.guscrawford.com && npm i && npm run build && cd ../api.crawford.com && npm i && tsc",
     "local": "npm-run-all --parallel api ui",
     "api": "cd api.guscrawford.com && npm run api.develop",
     "ui": "cd ui.guscrawford.com && ng serve --proxy proxy.conf.json --port 58585",
@@ -25,5 +24,8 @@
     "url": "https://github.com/GUSCRAWFORD/guscrawford.com/issues"
   },
   "homepage": "https://github.com/GUSCRAWFORD/guscrawford.com#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "npm-run-all": "^4.1.2"
+  }
 }
