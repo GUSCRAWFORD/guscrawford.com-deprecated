@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild,
-  OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+  OnInit, AfterViewChecked, ChangeDetectorRef, } from '@angular/core';
+import { ActivatedRoute } from '@angular/router'
 import { MatExpansionPanel } from '@angular/material/expansion'
 import {
   /*FormController,
@@ -19,7 +20,8 @@ import {
 export class ViewPostingComponent implements OnInit, AfterViewChecked {
 
   constructor(
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private activatedRoute:ActivatedRoute
   ) { }
   @ViewChild(MatExpansionPanel)
   expPanel: MatExpansionPanel;
@@ -29,14 +31,17 @@ export class ViewPostingComponent implements OnInit, AfterViewChecked {
   @Input()
   collapsible: boolean = true;
   ngOnInit() {
-    this.post.$.nextPost(this.post._id, {$select:"_id,title"})
-      .subscribe(nextPost=>{
-        this.nextPost=nextPost;
-        console.log(nextPost)
-      },
-      err=>{
-        this.nextPost = null;
-      });
+    this.activatedRoute.params.subscribe(params=>{
+        this.post.$.nextPost(params.id?params.id:this.post._id, {$select:"_id,title"})
+          .subscribe(nextPost=>{
+            this.nextPost=nextPost;
+            console.log(nextPost)
+          },
+          err=>{
+            this.nextPost = null;
+          });
+    })
+
   }
   ngAfterViewChecked() {
     this.cd.detectChanges();

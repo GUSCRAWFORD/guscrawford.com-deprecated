@@ -26,7 +26,7 @@ export class ODataApiMetadata {
     "url":  string;
 }
 export class ODataResource<TModel> {
-  constructor(public name:string, private http: Http, protected model$odata=null) {
+  constructor(public name:string, private http: Http, public model$odata=null) {
     if (!model$odata) this.model$odata = {};
   }
   registerItemAction(method:string, action:string) {

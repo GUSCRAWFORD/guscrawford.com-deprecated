@@ -20,7 +20,8 @@ export class PostManager extends GenericManager<Post> {
       created: new OnAndBy(new Date().valueOf(), ''),
       modified: new OnAndBy(new Date().valueOf(), ''),
       public:false,
-      previousPostId:''
+      previousPostId:'',
+      $:this.resource.model$odata
     }
   }
 }

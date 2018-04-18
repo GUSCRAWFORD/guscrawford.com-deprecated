@@ -32,9 +32,11 @@
                   (image)="post.image=$event"
                   (imageAlt)="post.imageAlt=$event"
                   (preview)="post.preview=$event"></app-posting>
-      <button mat-button [hidden]="!nextPost" type="submit" [routerLink]="['/post',nextPost&&nextPost._id]">
-        Continue reading <b>{{nextPost && nextPost.title}}</b>
-      </button>
+      <span [hidden]="!nextPost">
+        <button mat-button  type="submit" [routerLink]="['/post',nextPost&&nextPost._id]">
+          Continue reading <b>{{nextPost && nextPost.title}}</b>
+        </button>
+      </span>
   </mat-expansion-panel>
   <ng-template #display>
     <app-posting [post]="post"
