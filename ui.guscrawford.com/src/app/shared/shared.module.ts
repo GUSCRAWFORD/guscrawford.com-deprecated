@@ -27,7 +27,9 @@ import {
   MatToolbarModule,
   MatExpansionModule,
   MatSlideToggleModule,
-  MatListModule
+  MatListModule,
+  MatOption,
+  MatSelectModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -43,6 +45,7 @@ import { UiDrawerPageWrapComponent } from './ui/ui-drawer-page-wrap/ui-drawer-pa
 
 import { AuthGuardService } from '../shared/login/auth-guard.service';
 
+import { KvpPipe, StringifyPipe } from './pipes/object.pipe';
 @NgModule({
   imports: [
     CommonModule,
@@ -61,6 +64,7 @@ import { AuthGuardService } from '../shared/login/auth-guard.service';
     MatExpansionModule,
     MatSlideToggleModule,
     MatListModule,
+    MatSelectModule,
     FormsModule,
     ReactiveFormsModule
   ],
@@ -70,7 +74,9 @@ import { AuthGuardService } from '../shared/login/auth-guard.service';
     LoginComponent,
     UiToolbarComponent,
     UiDrawerMenuComponent,
-    UiDrawerPageWrapComponent
+    UiDrawerPageWrapComponent,
+    
+    KvpPipe, StringifyPipe
   ],
   // providers: [
   //   ODataService,
@@ -94,10 +100,12 @@ import { AuthGuardService } from '../shared/login/auth-guard.service';
     MatExpansionModule,
     MatSlideToggleModule,
     MatListModule,
+    MatSelectModule,
     MarkdownPreviewComponent,
     ReactiveFormsModule,
     LoginComponent,
-    UiComponent
+    UiComponent,
+    KvpPipe, StringifyPipe
   ]
 })
 export class SharedModule {
@@ -110,7 +118,8 @@ export class SharedModule {
         PostManager,
         UserManager,
         MarkdownService,
-        AuthGuardService]
+        AuthGuardService
+      ]
     };
   }
 }

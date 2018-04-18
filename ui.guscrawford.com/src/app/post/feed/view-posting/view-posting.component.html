@@ -14,6 +14,7 @@
   [src]="post.image||''">
 
 <div class="card-content" *ngIf="post">
+
       <app-markdown-preview
         [hidden]="post.readMore || !collapsible"
         class="hide-title"
@@ -31,6 +32,11 @@
                   (image)="post.image=$event"
                   (imageAlt)="post.imageAlt=$event"
                   (preview)="post.preview=$event"></app-posting>
+      <span [hidden]="!nextPost">
+        <button mat-button  type="submit" [routerLink]="['/post',nextPost&&nextPost._id]">
+          Continue reading <b>{{nextPost && nextPost.title}}</b>
+        </button>
+      </span>
   </mat-expansion-panel>
   <ng-template #display>
     <app-posting [post]="post"
@@ -38,9 +44,10 @@
       (image)="post.image=$event"
       (imageAlt)="post.imageAlt=$event"
       (preview)="post.preview=$event"></app-posting>
-  </ng-template>
 
+  </ng-template>
 </div>
 <div [hidden]="post" class="align-center">
   <mat-spinner></mat-spinner>
 </div>
+

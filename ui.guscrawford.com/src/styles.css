@@ -76,3 +76,15 @@ body.inner-scroll {
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
   }
+.mute {
+    opacity: 0.6;
+}
+.b, .bold {
+    font-weight: bold;
+}
+.i, .italics {
+    font-style: italic;
+}
+.u, .underline {
+    text-decoration: underline;
+}
