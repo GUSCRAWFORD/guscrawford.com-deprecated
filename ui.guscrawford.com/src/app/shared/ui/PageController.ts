@@ -3,16 +3,21 @@ import { Observable } from 'rxjs';
 export class PageController<T> {
     constructor(
         private component:any,
-        private observable:()=>Observable<T[]>
+        private observable?:()=>Observable<T[]>
     ) { }
     refreshPage() {
         this.loading = true;
-        return this.observable
-            .apply(this.component)
-            .flatMap(data=>{
-                this.loading = false;
-                return Observable.of(data);
-            });
+        if (this.observable)
+            return this.observable
+                .apply(this.component)
+                .flatMap(data=>{
+                    this.loading = false;
+                    return Observable.of(data);
+                });
+        else {
+            this.loading = false;
+        }
+        return true;
     }
     loading: boolean = false;
     pages: number = 0;

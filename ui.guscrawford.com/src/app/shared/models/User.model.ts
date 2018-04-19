@@ -1,4 +1,5 @@
-export interface User {
+import { Any } from './Any.model';
+export interface User extends Any {
     username: string;
     password?: string;
     roles?: UserRoles[];

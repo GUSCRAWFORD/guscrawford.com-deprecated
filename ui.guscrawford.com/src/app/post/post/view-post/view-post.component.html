@@ -1,0 +1,10 @@
+<mat-card class="mat-elevation-z8">
+    <app-view-posting *ngIf="post" [post]="post"></app-view-posting>
+    <mat-card-actions>
+        <app-posting-actions [post]="post" (action)="action($event)"></app-posting-actions>
+    </mat-card-actions>
+</mat-card>
+
+<div [hidden]="!pageControl.loading" class="align-center">
+  <mat-spinner></mat-spinner>
+</div>

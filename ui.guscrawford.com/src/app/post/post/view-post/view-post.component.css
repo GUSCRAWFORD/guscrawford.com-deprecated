@@ -1,0 +1,11 @@
+mat-card {
+    margin-top:24px;
+    overflow: hidden;
+}
+.just-space {
+    visibility: hidden;
+}
+mat-card-actions {
+    position:relative;
+    z-index:4;
+}

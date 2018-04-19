@@ -1,0 +1,29 @@
+textarea {
+    min-height: 200px;
+    max-height: 475px;
+}
+mat-expansion-panel {
+    background: none;
+}
+.valign-middle {
+    vertical-align: middle;
+}
+.disabled {
+    color:rgba(0,0,0,.26);
+}
+mat-slide-toggle {
+    padding-top:6px;
+    padding-right:15px;
+}
+mat-select-content.more-options {
+    mat-option {
+        visibility: hidden;
+    }
+}
+.hide {
+    visibility: hidden;
+}
+fieldset {
+    border:none;
+    padding-bottom: 12px;
+}

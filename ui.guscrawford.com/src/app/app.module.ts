@@ -10,9 +10,9 @@ import { routing } from './app.routing';
 import { UiComponent } from './shared/ui/ui.component';
 
 @NgModule({
-  // declarations: [
-  //   AppComponent
-  // ],
+  declarations: [
+
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

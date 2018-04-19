@@ -1,11 +1,11 @@
-
-export interface Post {
+import { Any } from './Any.model';
+export interface Post extends Any {
     content: string;
-    _id?: string;
     created: OnAndBy;
     modified: OnAndBy;
-
+    title?:string;
     public:boolean;
+    previousPostId:string;
 }
 export class OnAndBy {
     constructor (
@@ -18,7 +18,6 @@ export interface PostView {
     image?:string;
     imageAlt?:string;
     imageLoaded?:boolean;
-    title?:string;
     preview?:string;
     readMore?:boolean;
 }

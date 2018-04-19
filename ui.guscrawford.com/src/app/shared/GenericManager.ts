@@ -5,9 +5,10 @@ import { ODataService } from "./odata";
 export abstract class GenericManager<TModel> {
     constructor(
         protected resourceName: string,
-        protected OData: ODataService
+        protected OData: ODataService,
+        protected model$odata:any = null
     ) { }
-    protected resource = this.OData.resource<TModel>(this.resourceName);
+    protected resource = this.OData.resource<TModel>(this.resourceName, this.model$odata);
 
     list(query?) : Observable<TModel[]> {
       return this.resource.query(query);
