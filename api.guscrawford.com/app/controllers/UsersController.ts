@@ -1,3 +1,4 @@
+import { MongoCrudController, MongoDbContext, MongoControllerContext } from '@guscrawford.com/jyve/mongodb';
 import { ObjectID } from "mongodb";
 import {
     Edm,
@@ -9,12 +10,10 @@ import {
 } from "odata-v4-server";
 import { createQuery } from "odata-v4-mongodb";
 import { User, UserRoles } from '../models/User';
-import { DbContext } from '../common/DbContext';
-import { AccessControl, ControllerContext } from './AccessControl';
-import { MongoCrudController } from '../common/MongoCrudController'
+import { AccessControl, } from './AccessControl';
 @odata.type(User)
 export class UsersController extends AccessControl<User> {
-    static onBeforeAny(controllerContext:ControllerContext<User>) {
+    static onBeforeAny(controllerContext:MongoControllerContext<User>) {
         console.log('Users');
         if (controllerContext.data && controllerContext.data.password) {
             (controllerContext as any).setPassword = controllerContext.data.password;
@@ -23,16 +22,16 @@ export class UsersController extends AccessControl<User> {
         }
     }
 
-    static onBeforeUpsert(controllerContext:ControllerContext<User>) {
+    static onBeforeUpsert(controllerContext:MongoControllerContext<User>) {
         UsersController.restrict(controllerContext).to.atLeast(UserRoles.Member)
     }
-    static onBeforeUpdate(controllerContext:ControllerContext<User>) {
+    static onBeforeUpdate(controllerContext:MongoControllerContext<User>) {
         UsersController.restrict(controllerContext).to.atLeast(UserRoles.Member)
     }
-    static onBeforeInsert(controllerContext:ControllerContext<User>) {
+    static onBeforeInsert(controllerContext:MongoControllerContext<User>) {
         UsersController.restrict(controllerContext).to.atLeast(UserRoles.Admin)
     }
-    static onAfterUpsert(ctx:ControllerContext<User>) {
+    static onAfterUpsert(ctx:MongoControllerContext<User>) {
         let user = ctx.data;
         if ((ctx as any).setPassword) {
             console.log('Updating password...');
@@ -47,7 +46,7 @@ export class UsersController extends AccessControl<User> {
 
         }
     }
-    static onAfterInsert(ctx:ControllerContext<User>) {
+    static onAfterInsert(ctx:MongoControllerContext<User>) {
         console.log('Adding password (%s) for %s :',(ctx as any).setPassword, ctx.data._id)
         let user = ctx.data;
         if ((ctx as any).setPassword) {
@@ -61,12 +60,12 @@ export class UsersController extends AccessControl<User> {
                 },err=>console.log('failed to hash (%s)',err))
         }
     } 
-    static onAfterAny(controllerContext:ControllerContext<User>) {
+    static onAfterAny(controllerContext:MongoControllerContext<User>) {
         console.log(controllerContext.data)
     }
     async login( username:string, password: string){
         const
-            dbContext = await new DbContext().connect();
+            dbContext = await new MongoDbContext().connect();
         let result = { verified: false, user: null, hash:null};
         let compareHash = await PasswordHash.generate(password)
         await dbContext.db.collection(MongoCrudController.defaultName(this))
