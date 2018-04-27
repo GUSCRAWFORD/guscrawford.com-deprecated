@@ -6,7 +6,7 @@ import { ViewFeedComponent } from './feed/view-feed/view-feed.component';
 
 
 import { SharedModule } from '../shared/shared.module';
-import { routing } from './post.routing';
+import { routing } from './posts.routing';
 
 import { PostingActionsComponent } from './feed/posting-actions/posting-actions.component';
 import { ViewPostingComponent } from './feed/view-posting/view-posting.component';
@@ -42,4 +42,4 @@ import { ViewPostComponent } from './post/view-post/view-post.component';
     ViewPostingComponent
   ]
 })
-export class PostModule { }
+export class PostsModule { }

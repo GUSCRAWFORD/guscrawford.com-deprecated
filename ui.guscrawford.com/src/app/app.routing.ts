@@ -6,7 +6,8 @@ import { LoginComponent } from './shared/login/login.component';
 
 const routes: Routes = [
   { path:'login', component:LoginComponent},
-  { path:'', loadChildren:'./post/post.module#PostModule'}
+  { path:':package/docs/:version', loadChildren:'./docs/docs.module#DocsModule'},
+  { path:'', loadChildren:'./posts/posts.module#PostsModule'}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes);

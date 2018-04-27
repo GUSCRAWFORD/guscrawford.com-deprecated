@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 
 import { UiService } from './ui.service';
 @Component({
@@ -9,17 +9,24 @@ import { UiService } from './ui.service';
 export class UiComponent implements OnInit {
 
   constructor(
-    private ui: UiService
+    private ui: UiService,
+    private cd: ChangeDetectorRef
   ) { }
   @ViewChild('drawer')
   drawer: any;
-
+  toolbarStyle:any;
   ngOnInit() {
     this.ui.onDrawerMenuStateChange.subscribe(
       change=>{
         this.drawer.toggle()
       }
     );
+    this.ui.onToolbarStyleStateChange.subscribe(
+      newStyle=>{
+        this.toolbarStyle = newStyle;
+        this.cd.detectChanges();
+      }
+    )
   }
 
 }

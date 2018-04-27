@@ -31,7 +31,7 @@ export class UiDrawerMenuComponent implements OnInit {
 
   logout() {
     this.userManager.login('','').subscribe();
-    this.ui.drawerMenuState = false;
+    this.ui.drawerMenu = false;
   }
 
   itemIsActive(index:number) {

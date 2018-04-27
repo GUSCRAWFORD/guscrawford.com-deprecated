@@ -20,7 +20,7 @@ export class UiToolbarComponent implements OnInit {
   ngOnInit() {
     this.ui.onDrawerMenuStateChange.subscribe(change=>{
       this.hamburger._elementRef.nativeElement.classList.remove('cdk-focused', 'cdk-mouse-focused', 'cdk-program-focused');
-    })
+    });
   }
 
 }
