@@ -1,6 +1,6 @@
 <div class="align-right" [hidden]="!showEditActions">
 
-    <a mat-icon-button [href]="'/post/'+(post && post._id)+'/edit'">
+    <a mat-icon-button [routerLink]="['/post',(post && post._id),'edit']">
         <i class="material-icons">mode_edit</i>
     </a>
     

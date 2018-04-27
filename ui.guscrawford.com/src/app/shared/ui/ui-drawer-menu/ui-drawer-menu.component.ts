@@ -73,7 +73,7 @@ export class UiDrawerMenuComponent implements OnInit {
       {
         label:'New Post',
         'material-icon':'create',
-        routerLink:['/post','new'],
+        routerLink:['/new'],
         roles:{
           atLeast:UserRoles.Member
         },

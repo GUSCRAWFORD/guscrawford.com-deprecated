@@ -30,16 +30,24 @@ export class ViewPostComponent implements OnInit {
     this.action();
   }
   id: string;
+  title: string;
   post: Post;
   pageControl = new PageController(this, null);
   load() : Observable<Post> {
     return this.route.params
       .flatMap(params=>{
-        this.id = params.id;
+        if (params.id)
+          this.id = params.id;
+        else if (params.title)
+          this.title = params.title;
         return this.ui.user
       })
       .flatMap(user=>{
-        return this.postManager.one(this.id);
+        if (this.id)
+          return this.postManager.one(this.id);
+        else if (this.title)
+          return this.postManager.list({$filter:'title eq \''+this.title+'\''})
+            .flatMap(posts=>Observable.of(posts[0]));
       })
       .flatMap(post=>{
         return Observable.of(this.post=post)
