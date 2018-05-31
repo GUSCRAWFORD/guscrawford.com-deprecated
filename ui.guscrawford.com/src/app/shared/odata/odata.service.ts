@@ -43,6 +43,18 @@ export class ODataResource<TModel> {
         .map(rs=>rs.json());
     }
   }
+  $count(query:ODataQuery): Observable<number> {
+    let url = "@api/@resource/$count"
+                .replace(/@api/g,API)
+                .replace(/@resource/g, this.name);
+    if (query) url += '?'+serialize(query);
+    return this.http
+      .get(url, {
+        withCredentials:true
+      })
+      .map(rs=>rs.json().value)
+      .take(1);
+  }
   create(data:TModel) {
     let url = "@api/@resource"
                 .replace(/@api/g,API)
@@ -65,7 +77,7 @@ export class ODataResource<TModel> {
       })
       .map(rs=>rs.json());
   }
-  single(key:any, query?:any): Observable<TModel> {
+  single(key:any, query?:ODataQuery): Observable<TModel> {
     let url = "@api/@resource('@key')"
                 .replace(/@api/g,API)
                 .replace(/@resource/g, this.name)
@@ -82,7 +94,7 @@ export class ODataResource<TModel> {
         return rs;
       });
   }
-  query(query?:any): Observable<TModel[]> {
+  query(query?:ODataQuery): Observable<TModel[]> {
     let url = "@api/@resource"
                 .replace(/@api/g,API)
                 .replace(/@resource/g, this.name);
@@ -127,4 +139,11 @@ function filterStoredData<TModel>(data:TModel) {
   var clone = JSON.parse(JSON.stringify(data));
   if (clone.$) delete clone.$;
   return clone;
+}
+export class ODataQuery {
+  $top?:number;
+  $skip?:number;
+  $filter?:string;
+  $orderBy?:string;
+  $select?:string;
 }

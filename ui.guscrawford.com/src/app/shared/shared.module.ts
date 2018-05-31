@@ -45,7 +45,8 @@ import { UiDrawerPageWrapComponent } from './ui/ui-drawer-page-wrap/ui-drawer-pa
 
 import { AuthGuardService } from '../shared/login/auth-guard.service';
 
-import { KvpPipe, StringifyPipe } from './pipes/object.pipe';
+import { KvpPipe, StringifyPipe,
+  FilterPipe, SkipPipe, TopPipe } from './pipes/object.pipe';
 @NgModule({
   imports: [
     CommonModule,
@@ -76,7 +77,8 @@ import { KvpPipe, StringifyPipe } from './pipes/object.pipe';
     UiDrawerMenuComponent,
     UiDrawerPageWrapComponent,
     
-    KvpPipe, StringifyPipe
+    KvpPipe, StringifyPipe,
+    FilterPipe, SkipPipe, TopPipe
   ],
   // providers: [
   //   ODataService,
@@ -105,7 +107,8 @@ import { KvpPipe, StringifyPipe } from './pipes/object.pipe';
     ReactiveFormsModule,
     LoginComponent,
     UiComponent,
-    KvpPipe, StringifyPipe
+    KvpPipe, StringifyPipe,
+    FilterPipe, SkipPipe, TopPipe
   ]
 })
 export class SharedModule {

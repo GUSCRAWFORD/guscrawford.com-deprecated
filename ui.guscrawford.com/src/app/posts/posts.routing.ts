@@ -9,9 +9,10 @@ const routes: Routes = [
   { path: '', redirectTo:'feed', pathMatch:'full' },
   { path: 'feed', component: ViewFeedComponent},
   { path: 'feed/:topic', component: ViewFeedComponent},
-  { path: 'new', component: ViewEditComponent, canActivate:[AuthGuardService]},
-  { path:':id/edit', component: ViewEditComponent,  canActivate:[AuthGuardService]},
-  { path: ':id', component: ViewPostComponent}
+  { path: 'post/new', component: ViewEditComponent, canActivate:[AuthGuardService]},
+  { path:'post/:id/edit', component: ViewEditComponent,  canActivate:[AuthGuardService]},
+  { path: 'post/:id', component: ViewPostComponent},
+  { path: ':title', component: ViewPostComponent}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);

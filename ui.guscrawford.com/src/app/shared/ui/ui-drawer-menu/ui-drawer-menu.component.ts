@@ -31,7 +31,7 @@ export class UiDrawerMenuComponent implements OnInit {
 
   logout() {
     this.userManager.login('','').subscribe();
-    this.ui.drawerMenuState = false;
+    this.ui.drawerMenu = false;
   }
 
   itemIsActive(index:number) {
@@ -50,7 +50,6 @@ export class UiDrawerMenuComponent implements OnInit {
         this.ui.has[cond](this.view.menu[index][cond]).subscribe(pass=>{
           roleCheck = roleCheck || pass;
           if (conditions.length === (i+1)){
-            console.log(roleCheck+' || '+pass);
             this.view.menu[index].hidden = roleCheck;
             if (!roleCheck) console.info('Showing '+this.view.menu[index].label)
           }
@@ -59,7 +58,7 @@ export class UiDrawerMenuComponent implements OnInit {
       return this.view.menu[index].hidden = true;
     }
 
-    console.info('Showing (by default)'+this.view.menu[index].label)
+    console.info('Showing (by default) '+this.view.menu[index].label)
     return this.view.menu[index].hidden = false;
   }
   view : { menu: MenuItem[] } = {
@@ -73,7 +72,7 @@ export class UiDrawerMenuComponent implements OnInit {
       {
         label:'New Post',
         'material-icon':'create',
-        routerLink:['/post','new'],
+        routerLink:['/new'],
         roles:{
           atLeast:UserRoles.Member
         },

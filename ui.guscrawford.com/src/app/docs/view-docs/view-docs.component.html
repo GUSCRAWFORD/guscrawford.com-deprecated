@@ -1,0 +1,8 @@
+<p>
+  view-docs works!
+</p>
+<ul>
+  <li *ngFor="let s of sample | $filter: {'region.NCAA':{'! eq':'sec'}}">
+    {{s | stringify}}
+  </li>
+</ul>

@@ -6,9 +6,9 @@
   </mat-drawer>
 
   <div class="drawer-container-sidenav-content">
-    <mat-toolbar class="toolbar mat-elevation-z3">
-      <app-ui-toolbar></app-ui-toolbar>
-    </mat-toolbar>
+      <mat-toolbar class="toolbar mat-elevation-z3"  [ngStyle]="toolbarStyle">
+        <app-ui-toolbar></app-ui-toolbar>
+      </mat-toolbar>
     <div class="drawer-container-sidenav-content-view-wrapper">
       <!-- <mat-toolbar class="toolbar-space"></mat-toolbar> -->
       <router-outlet></router-outlet>

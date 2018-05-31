@@ -16,6 +16,7 @@
   "author": "Gus",
   "license": "MIT",
   "dependencies": {
+    "@guscrawford.com/jyve": "^0.2.2",
     "@types/mongodb": "^3.0.5",
     "@types/passport-jwt": "^3.0.1",
     "bcrypt": "^1.0.3",

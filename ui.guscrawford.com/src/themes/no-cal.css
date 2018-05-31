@@ -1,0 +1,9 @@
+.mat-drawer-container {
+    background-image: url('assets/golden-gate-by-gus.jpeg');
+    background-size: cover;
+    background-attachment: fixed;
+}
+.mat-toolbar {
+    background-color: rgba(9, 14, 56, 0.7);
+    color:white;
+}

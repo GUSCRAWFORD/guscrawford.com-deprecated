@@ -1,3 +1,4 @@
+import { MongoCrudController, MongoDbContext, MongoControllerContext } from '@guscrawford.com/jyve/mongodb';
 import { ObjectID } from "mongodb";
 import {
     ODataController,
@@ -11,13 +12,12 @@ import {
     Post,
     GUEST_USER,
  } from '../models';
-import { DbContext } from '../common/DbContext';
-import { AccessControl, ControllerContext } from './AccessControl';
+import { AccessControl } from './AccessControl';
 @odata.type(Post)
 export class PostsController extends AccessControl<Post> {
     @odata.POST("previousPost").$ref
     async setPreviousPost (@odata.key key:string, @odata.link link:string):Promise<number> {
-        const dbContext = await new DbContext().connect();
+        const dbContext = await new MongoDbContext().connect();
         let keyId;
         try{ keyId = new ObjectID(key); }catch(err){ keyId = key; }
         let linkId;
@@ -33,7 +33,7 @@ export class PostsController extends AccessControl<Post> {
     @odata.GET("nextPost")
     async getNextPost(@odata.result result: Post, @odata.query query: ODataQuery): Promise<Post> {
         const
-            dbContext = await new DbContext().connect(),
+            dbContext = await new MongoDbContext().connect(),
             mongodbQuery = createQuery(query);
         return dbContext.db.collection(PostsController.defaultName(this)).findOne({ previousPostId: result._id.toHexString() }, {
             fields: mongodbQuery.projection
@@ -42,7 +42,7 @@ export class PostsController extends AccessControl<Post> {
     @odata.GET("previousPost")
     async getPreviousPost(@odata.result result: Post, @odata.query query: ODataQuery): Promise<Post> {
         const
-            dbContext = await new DbContext().connect(),
+            dbContext = await new MongoDbContext().connect(),
             mongodbQuery = createQuery(query);
         let prevId;
         try{ prevId = new ObjectID(result.previousPostId); }catch(err){ prevId = result.previousPostId; }
@@ -50,21 +50,21 @@ export class PostsController extends AccessControl<Post> {
             fields: mongodbQuery.projection
         });
     }
-    static onBeforeInsert(controllerContext:ControllerContext<Post>) {
+    static onBeforeInsert(controllerContext:MongoControllerContext<Post>) {
         PostsController.restrict(controllerContext).to.atLeast(UserRoles.Member);
         controllerContext.data.modified = controllerContext.data.created = {
             on : new Date().valueOf(),
             by: PostsController.user(controllerContext).username
         };
     }
-    static onBeforeUpsert(controllerContext:ControllerContext<Post>) {
+    static onBeforeUpsert(controllerContext:MongoControllerContext<Post>) {
         PostsController.restrict(controllerContext).to.atLeast(UserRoles.Member);
         controllerContext.data.modified = {
             on : new Date().valueOf(),
             by: PostsController.user(controllerContext).username
         };
     }
-    static onBeforeUpdate(controllerContext:ControllerContext<Post>) {
+    static onBeforeUpdate(controllerContext:MongoControllerContext<Post>) {
         PostsController.restrict(controllerContext).to.atLeast(UserRoles.Member);
         controllerContext.data.modified = {
             on : new Date().valueOf(),

@@ -1,6 +1,6 @@
 
 import { Observable } from 'rxjs/Observable';
-import { ODataService } from "./odata";
+import { ODataService, ODataQuery } from "./odata";
 
 export abstract class GenericManager<TModel> {
     constructor(
@@ -10,8 +10,11 @@ export abstract class GenericManager<TModel> {
     ) { }
     protected resource = this.OData.resource<TModel>(this.resourceName, this.model$odata);
 
-    list(query?) : Observable<TModel[]> {
+    list(query?:ODataQuery) : Observable<TModel[]> {
       return this.resource.query(query);
+    }
+    count(query?:ODataQuery) {
+      return this.resource.$count(query);
     }
     one(itemId:string) : Observable<TModel>{
       return this.resource.single(itemId);

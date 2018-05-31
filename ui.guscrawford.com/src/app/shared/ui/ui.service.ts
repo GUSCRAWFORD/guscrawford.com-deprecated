@@ -9,6 +9,7 @@ import {
   User,
   UserRoles
 } from '../models';
+import { EventListener } from '@angular/core/src/debug/debug_node';
 @Injectable()
 export class UiService {
 
@@ -31,20 +32,21 @@ export class UiService {
   };
 
   private _state = {
-    drawerMenu:AnimationBoxStates.Hidden as any
+    drawerMenu:AnimationBoxStates.Hidden as any,
+    toolbarStyle:null
   };
   redirectAfterLogin: string;
-  get drawerMenuState () {
+  get drawerMenu () {
     return this._state.drawerMenu;
   }
-  set drawerMenuState(val) {
-    this._onDrawerMenuStateChange.emit(val);
+  set drawerMenu(val) {
+    this.onDrawerMenuStateChange.emit(val);
     this._state.drawerMenu = val?AnimationBoxStates.Showing:AnimationBoxStates.Hidden;
   }
-  get onDrawerMenuStateChange () {
-    return this._onDrawerMenuStateChange;
-  }
-  _onDrawerMenuStateChange = new EventEmitter<boolean>();
+  set toolbarStyle(styleObj) { this._state.toolbarStyle = styleObj; this.onToolbarStyleStateChange.emit(styleObj)};
+  onToolbarStyleStateChange = new EventEmitter<any>();
+  toolbarTitle: string;
+  onDrawerMenuStateChange = new EventEmitter<boolean>();
   get user() : Observable<User> {
     if (this._user.loggedIn) return Observable.of(this._user.loggedIn);
     if (this._user.loggingIn) return this._user.loggingIn;
