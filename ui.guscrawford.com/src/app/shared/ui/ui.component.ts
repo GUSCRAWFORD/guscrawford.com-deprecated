@@ -14,6 +14,8 @@ export class UiComponent implements OnInit {
   ) { }
   @ViewChild('drawer')
   drawer: any;
+  @ViewChild('scrollContainer')
+  scrollContainer: any;
   toolbarStyle:any;
   ngOnInit() {
     this.ui.onDrawerMenuStateChange.subscribe(

@@ -2,7 +2,7 @@
 <mat-nav-list>
   <div *ngFor="let item of view.menu; index as i" [hidden]="itemIsVisible(i)">
     <a mat-list-item
-      (click)="item.closeDrawer?ui.drawerMenuState = false:null;"
+      (click)="item.closeDrawer?ui.drawerMenu = false:null;"
       [routerLink]="item.routerLink"
       [ngClass]="{
         'mat-list-item-focus':itemIsActive(i)

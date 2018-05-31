@@ -9,6 +9,7 @@ import {
   User,
   UserRoles
 } from '../models';
+import { EventListener } from '@angular/core/src/debug/debug_node';
 @Injectable()
 export class UiService {
 

@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild,
-  OnInit, AfterViewChecked, ChangeDetectorRef, } from '@angular/core';
+  OnInit, AfterViewChecked, ChangeDetectorRef, ElementRef} from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { MatExpansionPanel } from '@angular/material/expansion'
 import {
@@ -21,7 +21,8 @@ export class ViewPostingComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private activatedRoute:ActivatedRoute
+    private activatedRoute:ActivatedRoute,
+    public element:ElementRef
   ) { }
   @ViewChild(MatExpansionPanel)
   expPanel: MatExpansionPanel;

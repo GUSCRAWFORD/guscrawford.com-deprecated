@@ -15,6 +15,7 @@ export class ViewDocsComponent implements OnInit {
   ) { }
   package:string;
   version:string;
+  sample = [{state:'AL', region:{NCAA:'SEC'}},{state:'GA',region:{NCAA:'SEC'}},{state:'NY',region:{NCAA:'Big12'}}];
   ngOnInit() {
     this.route.params.flatMap(params=>{
       this.package = params.package;

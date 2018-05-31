@@ -6,7 +6,7 @@
         (mouseout)="view.interest(null)"
         (click)="view.showContent[post._id]=view.showContent[post._id]?0:1"
     >
-        <app-view-posting [post]="post"></app-view-posting>
+        <app-view-posting [post]="post" [id]="'post-'+post._id"></app-view-posting>
         <mat-card-actions [@fadeInOut]="view.state[post._id]">
             <app-posting-actions [class.just-space]="view.hot!==post" [post]="post" (action)="action($event)"></app-posting-actions>
         </mat-card-actions>
